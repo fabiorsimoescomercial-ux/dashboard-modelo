@@ -45,7 +45,7 @@ export const Route = createFileRoute("/")({
 
 function DashboardLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");

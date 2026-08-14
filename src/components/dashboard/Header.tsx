@@ -18,7 +18,7 @@ interface HeaderProps {
 
 export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps) {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 md:px-8 shrink-0 z-20 transition-all duration-500 ease-in-out">
+    <header className="flex h-16 items-center justify-between border-b border-border bg-[#0a0e14] px-4 md:px-8 shrink-0 z-20 transition-all duration-500 ease-in-out">
       <div className="flex items-center gap-4 md:gap-6">
 
         
