@@ -1,59 +1,60 @@
 import { cn } from "@/lib/utils";
+import funnelAsset from "@/assets/funnel.png.asset.json";
 
-interface FunnelStepProps {
+interface FunnelDataPointProps {
   label: string;
   value: string;
   percentage: string;
-  width: string;
-  color: string;
-  isLast?: boolean;
+  top: string;
 }
 
-function FunnelStep({ label, value, percentage, width, color, isLast }: FunnelStepProps) {
+function FunnelDataPoint({ label, value, percentage, top }: FunnelDataPointProps) {
   return (
-    <div className="flex flex-col items-center w-full">
-      <div 
-        className={cn(
-          "h-12 flex items-center justify-between px-4 rounded-lg mb-1 transition-all duration-500 shadow-lg",
-          color
-        )}
-        style={{ width }}
-      >
-        <span className="text-[10px] font-bold text-white uppercase tracking-tighter truncate max-w-[60%]">{label}</span>
-        <span className="text-xs font-bold text-white">{value}</span>
+    <div 
+      className="absolute right-0 flex items-center group pointer-events-none"
+      style={{ top }}
+    >
+      <div className="mr-4 text-right">
+        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-tighter leading-none">{label}</p>
+        <p className="text-sm font-black text-foreground tabular-nums leading-none mt-1">{value}</p>
+        <p className="text-[9px] font-medium text-blue-400/80 leading-none mt-0.5">{percentage}</p>
       </div>
-      {!isLast && (
-        <div className="flex flex-col items-center my-1 opacity-50">
-          <div className="w-0.5 h-3 bg-white/20" />
-          <span className="text-[9px] font-bold text-white/40">{percentage}</span>
-          <div className="w-0.5 h-3 bg-white/20" />
-        </div>
-      )}
+      <div className="w-12 h-px bg-border group-hover:bg-blue-500 transition-colors" />
     </div>
   );
 }
 
 export function TrafficFunnel() {
-  const steps = [
-    { label: "Impressões", value: "24,4 mil", percentage: "100%", width: "100%", color: "bg-blue-600/20 border border-blue-500/10" },
-    { label: "Alcance", value: "20,7 mil", percentage: "84.8%", width: "85%", color: "bg-blue-600/40 border border-blue-500/20" },
-    { label: "Cliques", value: "421", percentage: "2.0%", width: "70%", color: "bg-blue-600/60 border border-blue-500/30" },
-    { label: "Leads WhatsApp", value: "90", percentage: "21.3%", width: "55%", color: "bg-blue-600 border border-blue-400/50 shadow-blue-500/20" },
+  const data = [
+    { label: "Impressões", value: "24,4 mil", percentage: "100%", top: "12%" },
+    { label: "Alcance", value: "20,7 mil", percentage: "84.8%", top: "38%" },
+    { label: "Cliques", value: "421", percentage: "2.0%", top: "62%" },
+    { label: "Leads WhatsApp", value: "90", percentage: "21.3%", top: "85%" },
   ];
 
   return (
-    <div className="rounded-xl border border-border bg-card p-6 shadow-lg shadow-black/5 h-full transition-all duration-500 ease-in-out">
-      <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-8 text-center">Funil de Tráfego</h3>
-      <div className="flex flex-col items-center space-y-0 max-w-md mx-auto">
-        {steps.map((step, index) => (
-          <FunnelStep 
-            key={step.label}
-            {...step}
-            isLast={index === steps.length - 1}
+    <div className="rounded-xl border border-border bg-card p-6 shadow-lg shadow-black/5 h-full transition-all duration-500 ease-in-out flex flex-col">
+      <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-6 text-center">Funil de Tráfego</h3>
+      
+      <div className="relative flex-1 min-h-[300px] w-full max-w-[340px] mx-auto">
+        {/* Funnel Image Container */}
+        <div className="absolute inset-0 flex items-center justify-start pr-24">
+          <img 
+            src={funnelAsset.url} 
+            alt="Funil de Tráfego" 
+            className="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(59,130,246,0.2)]"
           />
-        ))}
+        </div>
+
+        {/* Data Points Layer */}
+        <div className="absolute inset-0 pr-4">
+          {data.map((point) => (
+            <FunnelDataPoint key={point.label} {...point} />
+          ))}
+        </div>
       </div>
-      <div className="mt-8 pt-6 border-t border-border flex justify-between items-center px-2">
+
+      <div className="mt-6 pt-6 border-t border-border flex justify-between items-center px-2">
         <div className="text-center">
           <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">CTR Geral</p>
           <p className="text-sm font-bold text-[#38BDF8]">1.72%</p>
