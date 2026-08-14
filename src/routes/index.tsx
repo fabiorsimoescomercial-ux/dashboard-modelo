@@ -115,13 +115,13 @@ function DashboardLayout() {
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
         />
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8">
+        <main className="flex-1 overflow-y-auto bg-[#1A1D24] p-4 md:p-8 space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/30">
+              <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <span>Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
-                <span className="text-white/60">Visão Geral</span>
+                <span className="text-white">Visão Geral</span>
               </nav>
               <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
                 Visão Geral
