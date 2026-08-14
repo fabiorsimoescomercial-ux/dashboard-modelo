@@ -46,10 +46,25 @@ export const Route = createFileRoute("/")({
 function DashboardLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [fbData, setFbData] = useState<any>(null);
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
     setTheme(isDark ? "dark" : "light");
+
+    // Check for Facebook data in URL
+    const params = new URLSearchParams(window.location.search);
+    const dataParam = params.get('data');
+    if (dataParam) {
+      try {
+        const parsedData = JSON.parse(decodeURIComponent(dataParam));
+        setFbData(parsedData.data?.[0] || null);
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {
+        console.error("Error parsing FB data:", e);
+      }
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -62,12 +77,27 @@ function DashboardLayout() {
     }
   };
 
-
   const stats = [
-    { label: "Investimento", value: "R$ 621,50", change: "-79.3%" },
-    { label: "CPM", value: "R$ 25,51", change: "-16.2%" },
-    { label: "CPC", value: "R$ 1,48", change: "22.0%" },
-    { label: "Custo por Lead WhatsApp", value: "R$ 6,91", change: "-23.6%" },
+    { 
+      label: "Investimento", 
+      value: fbData ? `R$ ${parseFloat(fbData.spend).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : "R$ 621,50", 
+      change: "-79.3%" 
+    },
+    { 
+      label: "Impressões", 
+      value: fbData ? parseInt(fbData.impressions).toLocaleString('pt-BR') : "24.363", 
+      change: "-16.2%" 
+    },
+    { 
+      label: "CTR", 
+      value: fbData ? `${parseFloat(fbData.ctr).toFixed(2)}%` : "1.24%", 
+      change: "22.0%" 
+    },
+    { 
+      label: "Cliques", 
+      value: fbData ? fbData.clicks : "302", 
+      change: "-23.6%" 
+    },
   ];
 
   const chartData = [

@@ -12,10 +12,10 @@ export const Route = createFileRoute('/api/public/facebook-callback')({
           return new Response('Code not provided', { status: 400 });
         }
 
-        const APP_ID = '713747984641816';
-        // IMPORTANT: In a real app, this secret should be in process.env['FACEBOOK_APP_SECRET']
-        const APP_SECRET = 'YOUR_APP_SECRET_HERE'; 
+        const APP_ID = '1843053493802626';
+        const APP_SECRET = 'bb45526d0d4f88551ff3dcb740a5e6a0'; 
         const REDIRECT_URI = 'https://project--a4426e19-b75d-4caf-bbd2-f5a39957c344-dev.lovable.app/api/public/facebook-callback';
+        const AD_ACCOUNT_ID = 'act_713747984641816';
 
         try {
           // 1. Exchange code for token
@@ -30,28 +30,20 @@ export const Route = createFileRoute('/api/public/facebook-callback')({
 
           const access_token = tokenRes.data.access_token;
 
-          // 2. List ad accounts
-          const accountsRes = await axios.get(`https://graph.facebook.com/v18.0/me/adaccounts`, {
-            params: {
-              access_token: access_token,
-              fields: 'id,name'
+          // 2. Pega dados direto da conta travada
+          const insightsRes = await axios.get(`https://graph.facebook.com/v18.0/${AD_ACCOUNT_ID}/insights`, {
+            params: { 
+              access_token, 
+              fields: 'spend,impressions,clicks,ctr,cpc', 
+              date_preset: 'last_30d' 
             }
           });
 
-          const accounts = accountsRes.data.data;
-          
-          if (!accounts || accounts.length === 0) {
-            return new Response('No ad accounts found', { status: 404 });
-          }
-
-          // 3. Pick the first account
-          const accountId = accounts[0].id;
-
-          // Redirect back to dashboard with the account ID
+          // Redirect back to dashboard with the insights data
           return new Response(null, {
             status: 302,
             headers: {
-              Location: `/?account=${accountId}`,
+              Location: `/?data=${encodeURIComponent(JSON.stringify(insightsRes.data))}`,
             },
           });
         } catch (error: any) {
