@@ -18,24 +18,24 @@ interface HeaderProps {
 
 export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps) {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-white/5 bg-[#0a0e14] px-4 md:px-8 shrink-0 z-20 transition-colors duration-300">
+    <header className="flex h-16 items-center justify-between border-b border-white/5 bg-[#1A1D24] px-4 md:px-8 shrink-0 z-20 transition-colors duration-300">
       <div className="flex items-center gap-6">
         <button 
           className="md:hidden" 
           onClick={onToggleMobileMenu}
         >
-          <Search className="h-6 w-6 text-white/40" />
+          <Search className="h-6 w-6 text-slate-400" />
         </button>
         
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <svg viewBox="0 0 24 24" className="h-6 w-6 text-blue-500 fill-current" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#38BDF8] fill-current" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
               <path d="M16.5 10.5c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm-9 0c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zM12 14c-1.381 0-2.5 1.119-2.5 2.5S10.619 19 12 19s2.5-1.119 2.5-2.5S13.381 14 12 14z"/>
             </svg>
             <div className="flex flex-col">
-              <span className="text-xs font-medium text-white/40 uppercase tracking-tighter leading-tight">Meta</span>
-              <span className="text-sm font-semibold text-white tracking-tight leading-tight">Dashboard Meta Ads | <span className="italic">Personalizze</span></span>
+              <span className="text-xs font-bold text-white uppercase tracking-tighter leading-tight">Meta</span>
+              <span className="text-[10px] font-medium text-slate-400 tracking-tight leading-tight">Dashboard Meta Ads | <span className="italic font-bold text-white">Personalizze</span></span>
             </div>
           </div>
         </div>
