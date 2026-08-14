@@ -36,8 +36,8 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
         </div>
       </div>
 
-      <div className="flex items-center gap-1 md:gap-4">
-        <div className="hidden sm:flex lg:flex items-center gap-2 md:gap-3">
+      <div className="flex items-center gap-1 sm:gap-4">
+        <div className="hidden md:flex lg:flex items-center gap-2 md:gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white hover:bg-white/5 transition-colors outline-none">
@@ -55,7 +55,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white hover:bg-white/5 transition-colors outline-none">
                 <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                <span>1 de ago. de 2026 - 13 de ago. de 2026</span>
+                <span className="truncate max-w-[120px] lg:max-w-none">1 de ago. de 2026 - 13 de ago. de 2026</span>
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-1" />
               </button>
             </DropdownMenuTrigger>
