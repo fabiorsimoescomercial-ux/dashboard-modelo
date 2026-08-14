@@ -20,16 +20,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
   return (
     <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 md:px-8 shrink-0 z-20 transition-all duration-500 ease-in-out">
       <div className="flex items-center gap-4 md:gap-6">
-        <button 
-          className="lg:hidden p-2 -ml-2 text-muted-foreground hover:bg-accent rounded-lg" 
-          onClick={onToggleMobileMenu}
-        >
-          <div className="space-y-1.5 w-5">
-            <div className="h-0.5 w-full bg-current rounded-full" />
-            <div className="h-0.5 w-full bg-current rounded-full" />
-            <div className="h-0.5 w-full bg-current rounded-full" />
-          </div>
-        </button>
+
         
         <div className="flex items-center gap-3 md:gap-4">
           <div className="flex items-center gap-2">

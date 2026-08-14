@@ -19,7 +19,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { CookieConsent } from "@/components/CookieConsent";
-import { Sidebar, type NavItem } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TrafficFunnel } from "@/components/dashboard/TrafficFunnel";
@@ -45,7 +44,6 @@ export const Route = createFileRoute("/")({
 });
 
 function DashboardLayout() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
@@ -64,10 +62,6 @@ function DashboardLayout() {
     }
   };
 
-  const navItems: NavItem[] = [
-    { name: "Visão Geral", icon: LayoutDashboard, active: true },
-    { name: "Mobile", icon: Smartphone, active: false },
-  ];
 
   const stats = [
     { label: "Investimento", value: "R$ 621,50", change: "-79.3%" },
@@ -102,13 +96,6 @@ function DashboardLayout() {
 
   return (
     <div className="flex h-screen w-full bg-background transition-colors duration-500 ease-in-out">
-      <Sidebar 
-
-        isOpen={isSidebarOpen} 
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
-        items={navItems} 
-      />
-
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header 
           theme={theme} 
@@ -298,39 +285,6 @@ function DashboardLayout() {
 
       </div>
 
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden transition-opacity duration-300"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <div 
-            className="h-full w-72 max-w-[80vw] bg-card shadow-2xl transition-transform duration-300 ease-out flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex h-16 items-center justify-between border-b border-border px-6">
-              <span className="text-lg font-bold text-foreground italic uppercase tracking-tighter">Personalizze</span>
-              <button onClick={() => setIsMobileMenuOpen(false)}>
-                <X className="h-6 w-6 text-muted-foreground" />
-              </button>
-            </div>
-            <nav className="p-4 space-y-1">
-              {navItems.map((item) => (
-                <button
-                  key={item.name}
-                  className={cn(
-                    "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors",
-                    item.active ? "bg-primary/10 text-primary border border-primary/20" : "text-muted-foreground"
-                  )}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.name}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
-        </div>
-      )}
       <CookieConsent />
     </div>
   );
