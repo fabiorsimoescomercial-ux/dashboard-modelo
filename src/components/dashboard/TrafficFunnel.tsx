@@ -40,7 +40,7 @@ export function TrafficFunnel() {
         {/* Funnel Image Container */}
         <div className="absolute inset-0 flex items-center justify-start pr-20 sm:pr-24">
           <img 
-            src={funnelAsset.url} 
+            src="/funnel.png" 
             alt="Funil de Tráfego" 
             className="h-full w-auto object-contain drop-shadow-[0_10px_20px_rgba(59,130,246,0.2)]"
           />
