@@ -139,7 +139,7 @@ function DashboardLayout() {
             >
               <Menu className="h-6 w-6 text-muted-foreground" />
             </button>
-            <div className="relative hidden sm:block w-64 lg:w-96">
+            <div className="relative hidden md:block w-64 lg:w-96">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input 
                 placeholder="Buscar no sistema..." 
@@ -165,7 +165,7 @@ function DashboardLayout() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 rounded-full outline-none hover:opacity-80 transition-opacity">
-                  <div className="text-right hidden sm:block">
+                  <div className="text-right hidden md:block">
                     <p className="text-sm font-semibold leading-none text-foreground">Olá, Visitante</p>
                     <p className="text-xs text-muted-foreground mt-1">Admin</p>
                   </div>
@@ -222,7 +222,7 @@ function DashboardLayout() {
           </div>
 
           {/* Quick Stats Grid */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mb-8">
             {stats.map((stat) => (
               <div key={stat.label} className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm transition-colors duration-300">
                 <div className="flex items-center justify-between mb-4">
