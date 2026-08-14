@@ -113,11 +113,11 @@ function DashboardLayout() {
         <Header 
           theme={theme} 
           onToggleTheme={toggleTheme} 
-          onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+          onToggleMobileMenu={() => setIsMobileMenuOpen(true)} 
         />
 
-        <main className="flex-1 overflow-y-auto bg-background p-4 md:p-8 space-y-8 transition-colors duration-500 ease-in-out">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <main className="flex-1 overflow-y-auto bg-background p-3 sm:p-4 md:p-8 space-y-6 sm:space-y-8 transition-colors duration-500 ease-in-out">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <span className="text-muted-foreground">Dashboard</span>
@@ -300,11 +300,11 @@ function DashboardLayout() {
 
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden transition-opacity duration-300"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div 
-            className="h-full w-64 bg-card shadow-2xl transition-colors duration-500"
+            className="h-full w-72 max-w-[80vw] bg-card shadow-2xl transition-transform duration-300 ease-out flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-6">

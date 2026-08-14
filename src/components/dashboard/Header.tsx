@@ -19,15 +19,19 @@ interface HeaderProps {
 export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps) {
   return (
     <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 md:px-8 shrink-0 z-20 transition-all duration-500 ease-in-out">
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 md:gap-6">
         <button 
-          className="md:hidden" 
+          className="lg:hidden p-2 -ml-2 text-muted-foreground hover:bg-accent rounded-lg" 
           onClick={onToggleMobileMenu}
         >
-          <Search className="h-6 w-6 text-muted-foreground" />
+          <div className="space-y-1.5 w-5">
+            <div className="h-0.5 w-full bg-current rounded-full" />
+            <div className="h-0.5 w-full bg-current rounded-full" />
+            <div className="h-0.5 w-full bg-current rounded-full" />
+          </div>
         </button>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
           <div className="flex items-center gap-2">
             <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#38BDF8] fill-current" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
@@ -41,8 +45,8 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
         </div>
       </div>
 
-      <div className="flex items-center gap-2 md:gap-4">
-        <div className="hidden lg:flex items-center gap-3">
+      <div className="flex items-center gap-1 md:gap-4">
+        <div className="hidden sm:flex lg:flex items-center gap-2 md:gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white hover:bg-white/5 transition-colors outline-none">
