@@ -18,13 +18,13 @@ interface HeaderProps {
 
 export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps) {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-white/5 bg-[#1A1D24] px-4 md:px-8 shrink-0 z-20 transition-colors duration-300">
+    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-4 md:px-8 shrink-0 z-20 transition-all duration-500 ease-in-out">
       <div className="flex items-center gap-6">
         <button 
           className="md:hidden" 
           onClick={onToggleMobileMenu}
         >
-          <Search className="h-6 w-6 text-slate-400" />
+          <Search className="h-6 w-6 text-muted-foreground" />
         </button>
         
         <div className="flex items-center gap-4">
@@ -35,7 +35,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
             </svg>
             <div className="flex flex-col">
               <span className="text-xs font-bold text-white uppercase tracking-tighter leading-tight">Meta</span>
-              <span className="text-[10px] font-medium text-slate-400 tracking-tight leading-tight">Dashboard Meta Ads | <span className="italic font-bold text-white">Personalizze</span></span>
+              <span className="text-[10px] font-medium text-muted-foreground tracking-tight leading-tight">Dashboard Meta Ads | <span className="italic font-bold text-foreground">Personalizze</span></span>
             </div>
           </div>
         </div>
@@ -50,9 +50,9 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-[#23272F] border-slate-700 text-white/90">
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Todas as Campanhas</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">[Evolution][Conversoes]</DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Todas as Campanhas</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">[Evolution][Conversoes]</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -64,25 +64,25 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-1" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-[#23272F] border-slate-700 text-white/90">
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Hoje</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Ontem</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Últimos 7 dias</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Últimos 30 dias</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Este mês</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Personalizado</DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Hoje</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Ontem</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Últimos 7 dias</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Últimos 30 dias</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Este mês</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Personalizado</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
 
         <button 
           onClick={onToggleTheme}
-          className="rounded-full p-2 text-white/40 hover:bg-white/5 transition-colors"
+          className="rounded-full p-2 text-muted-foreground hover:bg-accent transition-colors duration-300"
         >
           {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
         </button>
 
-        <button className="relative rounded-full p-2 text-white/40 hover:bg-white/5 transition-colors">
+        <button className="relative rounded-full p-2 text-muted-foreground hover:bg-accent transition-colors duration-300">
           <Bell className="h-5 w-5" />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50" />
         </button>
@@ -91,22 +91,22 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-3 rounded-full outline-none hover:opacity-80 transition-opacity pl-2">
               <div className="text-right hidden md:block">
-                <p className="text-xs font-semibold leading-none text-white/90">Olá, Visitante</p>
-                <p className="text-[10px] text-white/30 uppercase tracking-widest mt-1">Admin</p>
+                <p className="text-xs font-semibold leading-none text-foreground/90">Olá, Visitante</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Admin</p>
               </div>
-              <div className="h-8 w-8 overflow-hidden rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
-                <User className="h-4 w-4 text-blue-400" />
+              <div className="h-8 w-8 overflow-hidden rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                <User className="h-4 w-4 text-primary" />
               </div>
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-[#1a222d] border-white/5 text-white/90">
+          <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-white/5" />
-            <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">
               <User className="mr-2 h-4 w-4" />
               <span>Perfil</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">
+            <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">
               <Settings2 className="mr-2 h-4 w-4" />
               <span>Configurações</span>
             </DropdownMenuItem>

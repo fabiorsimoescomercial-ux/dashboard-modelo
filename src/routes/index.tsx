@@ -101,8 +101,9 @@ function DashboardLayout() {
   } satisfies ChartConfig;
 
   return (
-    <div className="flex h-screen w-full bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="flex h-screen w-full bg-background transition-colors duration-500 ease-in-out">
       <Sidebar 
+
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
         items={navItems} 
@@ -115,15 +116,15 @@ function DashboardLayout() {
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
         />
 
-        <main className="flex-1 overflow-y-auto bg-[#1A1D24] p-4 md:p-8 space-y-8">
+        <main className="flex-1 overflow-y-auto bg-background p-4 md:p-8 space-y-8 transition-colors duration-500 ease-in-out">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                <span>Dashboard</span>
+                <span className="text-muted-foreground">Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
-                <span className="text-white">Visão Geral</span>
+                <span className="text-foreground">Visão Geral</span>
               </nav>
-              <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+              <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl transition-colors duration-500">
                 Visão Geral
               </h1>
             </div>
@@ -148,19 +149,19 @@ function DashboardLayout() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <TrafficFunnel />
                 
-                <div className="rounded-xl border border-slate-700 bg-[#23272F] p-6 shadow-lg shadow-black/20 flex flex-col min-h-[450px]">
+                <div className="rounded-xl border border-border bg-card p-6 shadow-lg shadow-black/5 flex flex-col min-h-[450px] transition-all duration-500 ease-in-out">
                   <div className="flex items-center justify-between mb-8">
                     <div className="flex flex-col">
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Leads vs Investimento</h3>
+                      <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Leads vs Investimento</h3>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-blue-400" />
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Leads</span>
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Leads</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-blue-600" />
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Invest.</span>
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Invest.</span>
                       </div>
                     </div>
                   </div>
@@ -187,30 +188,30 @@ function DashboardLayout() {
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-700 bg-[#23272F] shadow-lg shadow-black/20 overflow-hidden">
-                <div className="p-6 border-b border-slate-700">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Performance por Criativo</h3>
+              <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Performance por Criativo</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700">
+                      <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                         <th className="px-6 py-4">Criativo</th>
                         <th className="px-6 py-4 text-right">Impressions</th>
                         <th className="px-6 py-4 text-right">Lead</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700">
+                    <tbody className="divide-y divide-border">
                       {[
                         { id: 1, name: "[V 06] [CTA POLO][Copy Atualizada]", impressions: "8.988", leads: 40 },
                         { id: 2, name: "[V 02] [Copy V01][Direto]", impressions: "5.421", leads: 28 },
                         { id: 3, name: "[I 01] [Estático][Fixo]", impressions: "3.210", leads: 15 },
                       ].map((creative) => (
-                        <tr key={creative.id} className="text-xs text-slate-300 hover:bg-white/[0.02] transition-colors">
+                        <tr key={creative.id} className="text-xs text-muted-foreground hover:bg-accent transition-colors">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded bg-slate-800 border border-slate-700 shrink-0" />
-                              <span className="font-medium text-white truncate max-w-[200px]">{creative.name}</span>
+                              <span className="font-medium text-foreground truncate max-w-[200px]">{creative.name}</span>
                             </div>
                           </td>
                           <td className="px-6 py-4 text-right font-mono">{creative.impressions}</td>
@@ -219,7 +220,7 @@ function DashboardLayout() {
                       ))}
                     </tbody>
                   </table>
-                  <div className="px-6 py-3 border-t border-slate-700 flex justify-end items-center gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                     <span>1 - 15 / 15</span>
                     <div className="flex gap-2">
                       <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
@@ -231,14 +232,14 @@ function DashboardLayout() {
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-xl border border-slate-700 bg-[#23272F] shadow-lg shadow-black/20 overflow-hidden lg:col-span-3">
-                <div className="p-6 border-b border-slate-700 flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tabela de Campanhas</h3>
+              <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden lg:col-span-3 transition-all duration-500 ease-in-out">
+                <div className="p-6 border-b border-border flex items-center justify-between">
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700">
+                      <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                         <th className="px-6 py-4 font-bold">Campanha</th>
                         <th className="px-6 py-4 font-bold text-right">Investimento</th>
                         <th className="px-6 py-4 font-bold text-right">Impressões</th>
@@ -246,14 +247,14 @@ function DashboardLayout() {
                         <th className="px-6 py-4 font-bold text-right">Lead</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700">
+                    <tbody className="divide-y divide-border">
                       {[
                         { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", cost: "R$ 9,18", leads: 27, fill: 40 },
                         { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
                         { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", cost: "R$ 8,03", leads: 15, fill: 20 },
                       ].map((row, i) => (
-                        <tr key={i} className="text-xs text-slate-300 hover:bg-white/[0.02] transition-colors relative">
-                          <td className="px-6 py-4 font-medium text-white">{row.name}</td>
+                        <tr key={i} className="text-xs text-muted-foreground hover:bg-accent transition-colors relative">
+                          <td className="px-6 py-4 font-medium text-foreground">{row.name}</td>
                           <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
                             <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
                             <span className="relative z-10">{row.invest}</span>
@@ -266,7 +267,7 @@ function DashboardLayout() {
                           <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
                         </tr>
                       ))}
-                      <tr className="text-xs font-bold text-white bg-white/[0.02] border-t border-slate-700">
+                      <tr className="text-xs font-bold text-foreground bg-muted/30 border-t border-border">
                         <td className="px-6 py-4">Total geral</td>
                         <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
                         <td className="px-6 py-4 text-right font-mono">24.363</td>
@@ -275,7 +276,7 @@ function DashboardLayout() {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="px-6 py-3 border-t border-slate-700 flex justify-end items-center gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                     <span>1 - 15 / 15</span>
                     <div className="flex gap-2">
                       <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
@@ -288,8 +289,8 @@ function DashboardLayout() {
           </div>
         </main>
         
-        <footer className="bg-[#1A1D24] px-8 py-4 border-t border-slate-700">
-          <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+        <footer className="bg-card px-8 py-4 border-t border-border transition-colors duration-500 ease-in-out">
+          <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest">
             Dados atualizados pela última vez: 14/08/2026 09:06:09 (alguns itens na página não foram atualizados) | 
             <a href="#" className="underline ml-1 hover:text-white transition-colors">Política de Privacidade</a>
           </p>
@@ -303,11 +304,11 @@ function DashboardLayout() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div 
-            className="h-full w-64 bg-[#0F1218] shadow-2xl"
+            className="h-full w-64 bg-card shadow-2xl transition-colors duration-500"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex h-16 items-center justify-between border-b border-slate-700 px-6">
-              <span className="text-lg font-bold text-white italic uppercase tracking-tighter italic">Personalizze</span>
+            <div className="flex h-16 items-center justify-between border-b border-border px-6">
+              <span className="text-lg font-bold text-foreground italic uppercase tracking-tighter">Personalizze</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="h-6 w-6 text-muted-foreground" />
               </button>
@@ -318,7 +319,7 @@ function DashboardLayout() {
                   key={item.name}
                   className={cn(
                     "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors",
-                    item.active ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-white/40"
+                    item.active ? "bg-primary/10 text-primary border border-primary/20" : "text-muted-foreground"
                   )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
