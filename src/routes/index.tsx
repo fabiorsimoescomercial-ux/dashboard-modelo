@@ -195,13 +195,13 @@ function DashboardLayout() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700">
+                      <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                         <th className="px-6 py-4">Criativo</th>
                         <th className="px-6 py-4 text-right">Impressions</th>
                         <th className="px-6 py-4 text-right">Lead</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700">
+                    <tbody className="divide-y divide-border">
                       {[
                         { id: 1, name: "[V 06] [CTA POLO][Copy Atualizada]", impressions: "8.988", leads: 40 },
                         { id: 2, name: "[V 02] [Copy V01][Direto]", impressions: "5.421", leads: 28 },
@@ -220,7 +220,7 @@ function DashboardLayout() {
                       ))}
                     </tbody>
                   </table>
-                  <div className="px-6 py-3 border-t border-slate-700 flex justify-end items-center gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                     <span>1 - 15 / 15</span>
                     <div className="flex gap-2">
                       <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
@@ -239,7 +239,7 @@ function DashboardLayout() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700">
+                      <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                         <th className="px-6 py-4 font-bold">Campanha</th>
                         <th className="px-6 py-4 font-bold text-right">Investimento</th>
                         <th className="px-6 py-4 font-bold text-right">Impressões</th>
