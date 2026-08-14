@@ -116,7 +116,7 @@ function DashboardLayout() {
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
         />
 
-        <main className="flex-1 overflow-y-auto bg-[#1A1D24] p-4 md:p-8 space-y-8">
+        <main className="flex-1 overflow-y-auto bg-background p-4 md:p-8 space-y-8 transition-colors duration-500 ease-in-out">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
@@ -289,7 +289,7 @@ function DashboardLayout() {
           </div>
         </main>
         
-        <footer className="bg-[#1A1D24] px-8 py-4 border-t border-slate-700">
+        <footer className="bg-card px-8 py-4 border-t border-border transition-colors duration-500 ease-in-out">
           <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">
             Dados atualizados pela última vez: 14/08/2026 09:06:09 (alguns itens na página não foram atualizados) | 
             <a href="#" className="underline ml-1 hover:text-white transition-colors">Política de Privacidade</a>
@@ -307,7 +307,7 @@ function DashboardLayout() {
             className="h-full w-64 bg-[#0F1218] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex h-16 items-center justify-between border-b border-slate-700 px-6">
+            <div className="flex h-16 items-center justify-between border-b border-border px-6">
               <span className="text-lg font-bold text-white italic uppercase tracking-tighter italic">Personalizze</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="h-6 w-6 text-muted-foreground" />
