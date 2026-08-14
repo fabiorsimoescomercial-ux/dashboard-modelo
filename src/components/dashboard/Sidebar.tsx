@@ -46,7 +46,7 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
               !isOpen && "justify-center px-2"
             )}
           >
-            <item.icon className={cn("h-5 w-5 shrink-0 transition-transform group-hover:scale-110", item.active ? "text-blue-400" : "text-white/40")} />
+            <item.icon className={cn("h-5 w-5 shrink-0 transition-transform group-hover:scale-110", item.active ? "text-[#38BDF8]" : "text-slate-400")} />
             {isOpen && <span>{item.name}</span>}
           </button>
         ))}
