@@ -101,8 +101,9 @@ function DashboardLayout() {
   } satisfies ChartConfig;
 
   return (
-    <div className="flex h-screen w-full bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="flex h-screen w-full bg-background transition-colors duration-500 ease-in-out">
       <Sidebar 
+
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)} 
         items={navItems} 
