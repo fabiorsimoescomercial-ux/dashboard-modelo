@@ -14,7 +14,8 @@ import {
   Users, 
   DollarSign, 
   LogOut,
-  Settings2
+  Settings2,
+  Facebook
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -184,6 +185,14 @@ function DashboardLayout() {
             <p className="text-muted-foreground mt-1">
               Bem-vindo ao Personalizze. Acompanhe aqui os seus principais indicadores.
             </p>
+            <div className="mt-4">
+              <Button asChild className="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white gap-2">
+                <a href="/api/public/facebook-login">
+                  <Facebook className="h-4 w-4 fill-current" />
+                  Conectar com Facebook
+                </a>
+              </Button>
+            </div>
           </div>
 
           {/* Quick Stats Grid */}
