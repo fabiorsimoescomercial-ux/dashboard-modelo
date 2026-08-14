@@ -114,7 +114,7 @@
   --accent-foreground: oklch(0.95 0.01 240);
   --destructive: oklch(0.55 0.15 25);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.25 0.03 240);
+  --border: #334155; /* border-slate-700 equivalent in oklch or hex */
   --input: oklch(0.25 0.03 240);
   --ring: oklch(0.6 0.15 250);
   --chart-1: oklch(0.6 0.15 250);
