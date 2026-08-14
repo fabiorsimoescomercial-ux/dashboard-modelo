@@ -10,33 +10,59 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicFacebookCallbackRouteImport } from './routes/api/public/facebook-callback'
+import { Route as ApiPublicFacebookLoginRouteImport } from './routes/api/public/facebook-login'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicFacebookCallbackRoute =
+  ApiPublicFacebookCallbackRouteImport.update({
+    id: '/api/public/facebook-callback',
+    path: '/api/public/facebook-callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicFacebookLoginRoute = ApiPublicFacebookLoginRouteImport.update({
+  id: '/api/public/facebook-login',
+  path: '/api/public/facebook-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/facebook-callback': typeof ApiPublicFacebookCallbackRoute
+  '/api/public/facebook-login': typeof ApiPublicFacebookLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/facebook-callback': typeof ApiPublicFacebookCallbackRoute
+  '/api/public/facebook-login': typeof ApiPublicFacebookLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/facebook-callback': typeof ApiPublicFacebookCallbackRoute
+  '/api/public/facebook-login': typeof ApiPublicFacebookLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/api/public/facebook-callback' | '/api/public/facebook-login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/facebook-callback' | '/api/public/facebook-login'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/public/facebook-callback'
+    | '/api/public/facebook-login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicFacebookCallbackRoute: typeof ApiPublicFacebookCallbackRoute
+  ApiPublicFacebookLoginRoute: typeof ApiPublicFacebookLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +74,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/facebook-callback': {
+      id: '/api/public/facebook-callback'
+      path: '/api/public/facebook-callback'
+      fullPath: '/api/public/facebook-callback'
+      preLoaderRoute: typeof ApiPublicFacebookCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/facebook-login': {
+      id: '/api/public/facebook-login'
+      path: '/api/public/facebook-login'
+      fullPath: '/api/public/facebook-login'
+      preLoaderRoute: typeof ApiPublicFacebookLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicFacebookCallbackRoute: ApiPublicFacebookCallbackRoute,
+  ApiPublicFacebookLoginRoute: ApiPublicFacebookLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
