@@ -55,7 +55,7 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
       <div className="border-t border-slate-700 p-4">
         <button 
           onClick={onToggle}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-bold text-slate-500 hover:text-[#38BDF8] transition-colors group uppercase tracking-widest"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-bold text-muted-foreground hover:text-primary transition-colors group uppercase tracking-widest"
         >
           {isOpen ? (
             <>
