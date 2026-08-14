@@ -56,11 +56,23 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
-            <Calendar className="h-3.5 w-3.5 text-slate-400" />
-            <span>1 de ago. de 2026 - 13 de ago. de 2026</span>
-            <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-1" />
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white hover:bg-white/5 transition-colors outline-none">
+                <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                <span>1 de ago. de 2026 - 13 de ago. de 2026</span>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-1" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-[#23272F] border-slate-700 text-white/90">
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Hoje</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Ontem</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Últimos 7 dias</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Últimos 30 dias</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Este mês</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Personalizado</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         <button 
