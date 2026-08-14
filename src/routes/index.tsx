@@ -299,11 +299,11 @@ function DashboardLayout() {
 
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div 
-            className="h-full w-64 bg-[#0a0e14] shadow-2xl"
+            className="h-full w-64 bg-[#0F1218] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-16 items-center justify-between border-b border-slate-700 px-6">
