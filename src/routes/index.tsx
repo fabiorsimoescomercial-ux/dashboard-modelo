@@ -122,9 +122,9 @@ function DashboardLayout() {
               <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <span>Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
-                <span className="text-white">Visão Geral</span>
+                <span className="text-foreground">Visão Geral</span>
               </nav>
-              <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+              <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl transition-colors duration-500">
                 Visão Geral
               </h1>
             </div>
@@ -308,7 +308,7 @@ function DashboardLayout() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-6">
-              <span className="text-lg font-bold text-white italic uppercase tracking-tighter italic">Personalizze</span>
+              <span className="text-lg font-bold text-foreground italic uppercase tracking-tighter italic">Personalizze</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="h-6 w-6 text-muted-foreground" />
               </button>
@@ -319,7 +319,7 @@ function DashboardLayout() {
                   key={item.name}
                   className={cn(
                     "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors",
-                    item.active ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-white/40"
+                    item.active ? "bg-primary/10 text-primary border border-primary/20" : "text-muted-foreground"
                   )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
