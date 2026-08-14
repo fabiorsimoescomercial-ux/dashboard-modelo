@@ -21,7 +21,7 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
         isOpen ? "w-64" : "w-20"
       )}
     >
-      <div className="flex h-16 items-center border-b border-white/5 px-6">
+      <div className="flex h-16 items-center border-b border-border px-6">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shrink-0 shadow-lg shadow-blue-500/20">
             <TrendingUp className="h-5 w-5" />
