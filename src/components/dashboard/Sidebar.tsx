@@ -41,8 +41,8 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
             className={cn(
               "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-all duration-200 group",
               item.active 
-                ? "bg-blue-600/10 text-blue-400 border border-blue-500/20 shadow-inner" 
-                : "text-white/40 hover:text-white/70 hover:bg-white/5",
+                ? "bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20 shadow-inner" 
+                : "text-slate-400 hover:text-white hover:bg-white/5",
               !isOpen && "justify-center px-2"
             )}
           >
