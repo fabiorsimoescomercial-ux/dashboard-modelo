@@ -304,7 +304,7 @@ function DashboardLayout() {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div 
-            className="h-full w-64 bg-[#0F1218] shadow-2xl"
+            className="h-full w-64 bg-card shadow-2xl transition-colors duration-500"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-6">
