@@ -10,15 +10,21 @@ export const Route = createFileRoute("/")({
 // IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background p-8 text-center">
+      <h1 className="mb-6 text-2xl font-bold tracking-tight text-foreground">
+        Integração Looker & Meta Ads
+      </h1>
+      <p className="max-w-2xl whitespace-pre-wrap text-muted-foreground">
+        Execute esta instrucao no projeto: Eu preicso trazer para ca, compartilhando com o github e usando o vercel o dash criado no looker. veja se consegue pegar todo o layout pelo link. Eu ja criei a API do Meta Ads e vou vir em seguida com o codigo para tal{"\n\n"}
+        <a 
+          href="https://datastudio.google.com/reporting/49a56047-8c44-42bd-85da-1de55cc52d93" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-primary hover:underline font-medium"
+        >
+          https://datastudio.google.com/reporting/49a56047-8c44-42bd-85da-1de55cc52d93
+        </a>
+      </p>
     </div>
   );
 }
