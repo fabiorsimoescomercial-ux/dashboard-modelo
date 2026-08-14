@@ -180,12 +180,12 @@ function DashboardLayout() {
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest text-center sm:text-left">Performance por Criativo</h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left">
+                  <table className="w-full text-left min-w-[400px]">
                     <thead>
                       <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
-                        <th className="px-6 py-4">Criativo</th>
-                        <th className="px-6 py-4 text-right">Impressions</th>
-                        <th className="px-6 py-4 text-right">Lead</th>
+                        <th className="px-4 sm:px-6 py-4">Criativo</th>
+                        <th className="px-4 sm:px-6 py-4 text-right">Impressions</th>
+                        <th className="px-4 sm:px-6 py-4 text-right">Lead</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
@@ -224,14 +224,14 @@ function DashboardLayout() {
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left">
+                  <table className="w-full text-left min-w-[600px]">
                     <thead>
                       <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
-                        <th className="px-6 py-4 font-bold">Campanha</th>
-                        <th className="px-6 py-4 font-bold text-right">Investimento</th>
-                        <th className="px-6 py-4 font-bold text-right">Impressões</th>
-                        <th className="px-6 py-4 font-bold text-right">Custo p/ lead</th>
-                        <th className="px-6 py-4 font-bold text-right">Lead</th>
+                        <th className="px-4 sm:px-6 py-4 font-bold">Campanha</th>
+                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Investimento</th>
+                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Impressões</th>
+                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Custo p/ lead</th>
+                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Lead</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
@@ -276,8 +276,8 @@ function DashboardLayout() {
           </div>
         </main>
         
-        <footer className="bg-card px-8 py-4 border-t border-border transition-colors duration-500 ease-in-out">
-          <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest">
+        <footer className="bg-card px-4 sm:px-8 py-4 border-t border-border transition-colors duration-500 ease-in-out">
+          <p className="text-[8px] sm:text-[9px] text-muted-foreground font-bold uppercase tracking-widest leading-relaxed text-center sm:text-left">
             Dados atualizados pela última vez: 14/08/2026 09:06:09 (alguns itens na página não foram atualizados) | 
             <a href="#" className="underline ml-1 hover:text-white transition-colors">Política de Privacidade</a>
           </p>
