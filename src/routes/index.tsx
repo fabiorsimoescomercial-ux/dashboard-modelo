@@ -247,7 +247,7 @@ function DashboardLayout() {
                         <th className="px-6 py-4 font-bold text-right">Lead</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700">
+                    <tbody className="divide-y divide-border">
                       {[
                         { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", cost: "R$ 9,18", leads: 27, fill: 40 },
                         { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
@@ -276,7 +276,7 @@ function DashboardLayout() {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="px-6 py-3 border-t border-slate-700 flex justify-end items-center gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                     <span>1 - 15 / 15</span>
                     <div className="flex gap-2">
                       <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
@@ -290,7 +290,7 @@ function DashboardLayout() {
         </main>
         
         <footer className="bg-card px-8 py-4 border-t border-border transition-colors duration-500 ease-in-out">
-          <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+          <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest">
             Dados atualizados pela última vez: 14/08/2026 09:06:09 (alguns itens na página não foram atualizados) | 
             <a href="#" className="underline ml-1 hover:text-white transition-colors">Política de Privacidade</a>
           </p>
