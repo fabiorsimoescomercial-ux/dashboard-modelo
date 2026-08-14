@@ -67,41 +67,36 @@ function DashboardLayout() {
   const navItems: NavItem[] = [
     { name: "Visão Geral", icon: LayoutDashboard, active: true },
     { name: "Mobile", icon: Smartphone, active: false },
-    { name: "Relatórios", icon: BarChart3, active: false },
-    { name: "Configurações", icon: Settings, active: false },
   ];
 
   const stats = [
-    { label: "Investimento", value: "R$ 6.307,85", change: "+4.1%", sparklineColor: "#ef4444" },
-    { label: "CPM", value: "R$ 20,13", change: "-0.8%", sparklineColor: "#22c55e" },
-    { label: "CPC", value: "R$ 0,81", change: "-1.2%", sparklineColor: "#22c55e" },
-    { label: "Custo por Lead", value: "R$ 9,46", change: "-15.4%", sparklineColor: "#22c55e" },
+    { label: "Investimento", value: "R$ 621,50", change: "-79.3%" },
+    { label: "CPM", value: "R$ 25,51", change: "-16.2%" },
+    { label: "CPC", value: "R$ 1,48", change: "22.0%" },
+    { label: "Custo por Lead WhatsApp", value: "R$ 6,91", change: "-23.6%" },
   ];
 
   const chartData = [
-    { date: "01/08", investment: 450, leads: 42 },
-    { date: "02/08", investment: 520, leads: 48 },
-    { date: "03/08", investment: 480, leads: 45 },
-    { date: "04/08", investment: 610, leads: 58 },
-    { date: "05/08", investment: 580, leads: 52 },
-    { date: "06/08", investment: 490, leads: 44 },
-    { date: "07/08", investment: 550, leads: 50 },
-    { date: "08/08", investment: 620, leads: 62 },
-    { date: "09/08", investment: 590, leads: 55 },
-    { date: "10/08", investment: 470, leads: 40 },
-    { date: "11/08", investment: 530, leads: 49 },
-    { date: "12/08", investment: 640, leads: 65 },
-    { date: "13/08", investment: 610, leads: 59 },
+    { date: "04/08", investment: 120, leads: 40 },
+    { date: "05/08", investment: 180, leads: 480 },
+    { date: "06/08", investment: 150, leads: 120 },
+    { date: "07/08", investment: 220, leads: 90 },
+    { date: "08/08", investment: 200, leads: 70 },
+    { date: "09/08", investment: 170, leads: 110 },
+    { date: "10/08", investment: 240, leads: 85 },
+    { date: "11/08", investment: 210, leads: 95 },
+    { date: "12/08", investment: 260, leads: 105 },
+    { date: "13/08", investment: 230, leads: 90 },
   ];
 
   const chartConfig = {
     investment: {
       label: "Investimento (R$)",
-      color: "#ef4444",
+      color: "#3b82f6",
     },
     leads: {
       label: "Lead WhatsApp",
-      color: "#3b82f6",
+      color: "#38BDF8",
     },
   } satisfies ChartConfig;
 

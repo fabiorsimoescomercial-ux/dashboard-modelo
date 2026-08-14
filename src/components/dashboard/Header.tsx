@@ -1,5 +1,5 @@
 import metaAsset from "@/assets/meta-ads-reference.jpeg.asset.json";
-import { Search, Moon, Sun, Bell, User, LogOut, Settings2, Calendar } from "lucide-react";
+import { Search, Moon, Sun, Bell, User, LogOut, Settings2, Calendar, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -42,9 +42,25 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
       </div>
 
       <div className="flex items-center gap-2 md:gap-4">
-        <div className="hidden lg:flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white/70">
-          <Calendar className="h-3.5 w-3.5" />
-          <span>1 de ago. de 2026 - 13 de ago. de 2026</span>
+        <div className="hidden lg:flex items-center gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white hover:bg-white/5 transition-colors outline-none">
+                <span>Campanhas</span>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-[#23272F] border-slate-700 text-white/90">
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Todas as Campanhas</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">[Evolution][Conversoes]</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div className="flex items-center gap-2 bg-[#23272F] border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
+            <Calendar className="h-3.5 w-3.5 text-slate-400" />
+            <span>1 de ago. de 2026 - 13 de ago. de 2026</span>
+            <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-1" />
+          </div>
         </div>
 
         <button 

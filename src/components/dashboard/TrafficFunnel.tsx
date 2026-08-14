@@ -35,15 +35,15 @@ function FunnelStep({ label, value, percentage, width, color, isLast }: FunnelSt
 
 export function TrafficFunnel() {
   const steps = [
-    { label: "Impressões", value: "313.332", percentage: "100%", width: "100%", color: "bg-blue-600/40 border border-blue-500/30" },
-    { label: "Alcance", value: "115.656", percentage: "36.9%", width: "85%", color: "bg-blue-600/60 border border-blue-500/40" },
-    { label: "Cliques no link", value: "7.776", percentage: "6.7%", width: "70%", color: "bg-blue-600/80 border border-blue-500/50" },
-    { label: "Leads WhatsApp", value: "667", percentage: "8.5%", width: "55%", color: "bg-blue-600 border border-blue-400/50 shadow-blue-500/20" },
+    { label: "Impressões", value: "24,4 mil", percentage: "100%", width: "100%", color: "bg-blue-600/20 border border-blue-500/10" },
+    { label: "Alcance", value: "20,7 mil", percentage: "84.8%", width: "85%", color: "bg-blue-600/40 border border-blue-500/20" },
+    { label: "Cliques", value: "421", percentage: "2.0%", width: "70%", color: "bg-blue-600/60 border border-blue-500/30" },
+    { label: "Leads WhatsApp", value: "90", percentage: "21.3%", width: "55%", color: "bg-blue-600 border border-blue-400/50 shadow-blue-500/20" },
   ];
 
   return (
-    <div className="rounded-xl border border-white/5 bg-[#1a222d] p-6 shadow-lg shadow-black/20 h-full">
-      <h3 className="text-xs font-bold text-white/60 uppercase tracking-widest mb-8 text-center">Funil de Tráfego</h3>
+    <div className="rounded-xl border border-slate-700 bg-[#23272F] p-6 shadow-lg shadow-black/20 h-full">
+      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 text-center">Funil de Tráfego</h3>
       <div className="flex flex-col items-center space-y-0 max-w-md mx-auto">
         {steps.map((step, index) => (
           <FunnelStep 
@@ -53,18 +53,18 @@ export function TrafficFunnel() {
           />
         ))}
       </div>
-      <div className="mt-8 pt-6 border-t border-white/5 flex justify-between items-center px-2">
+      <div className="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center px-2">
         <div className="text-center">
-          <p className="text-[10px] text-white/30 uppercase font-bold tracking-tighter">CTR Geral</p>
-          <p className="text-sm font-bold text-blue-400">2.48%</p>
+          <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">CTR Geral</p>
+          <p className="text-sm font-bold text-[#38BDF8]">1.72%</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] text-white/30 uppercase font-bold tracking-tighter">Taxa Conv.</p>
-          <p className="text-sm font-bold text-blue-400">8.57%</p>
+          <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Taxa Conv.</p>
+          <p className="text-sm font-bold text-[#38BDF8]">21.37%</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] text-white/30 uppercase font-bold tracking-tighter">Freq.</p>
-          <p className="text-sm font-bold text-blue-400">2.71</p>
+          <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Freq.</p>
+          <p className="text-sm font-bold text-[#38BDF8]">1.18</p>
         </div>
       </div>
     </div>
