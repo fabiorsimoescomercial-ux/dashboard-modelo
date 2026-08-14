@@ -8,7 +8,8 @@ import {
   Users,
   DollarSign,
   ChevronRight,
-  Facebook
+  Facebook,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
