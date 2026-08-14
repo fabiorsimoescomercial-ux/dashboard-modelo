@@ -14,12 +14,12 @@ function FunnelDataPoint({ label, value, percentage, top }: FunnelDataPointProps
       className="absolute right-0 flex items-center group pointer-events-none"
       style={{ top }}
     >
-      <div className="mr-2 sm:mr-3 text-right">
-        <p className="text-[8px] sm:text-[9px] font-bold text-muted-foreground uppercase tracking-tighter leading-none">{label}</p>
-        <p className="text-xs sm:text-sm font-black text-foreground tabular-nums leading-none mt-0.5 sm:mt-1">{value}</p>
-        <p className="text-[8px] sm:text-[9px] font-medium text-blue-400/80 leading-none mt-0.5">{percentage}</p>
+      <div className="mr-1 sm:mr-2 md:mr-3 text-right">
+        <p className="text-[7px] sm:text-[9px] font-bold text-muted-foreground uppercase tracking-tighter leading-none">{label}</p>
+        <p className="text-[10px] sm:text-xs md:text-sm font-black text-foreground tabular-nums leading-none mt-0.5 sm:mt-1">{value}</p>
+        <p className="text-[7px] sm:text-[9px] font-medium text-blue-400/80 leading-none mt-0.5">{percentage}</p>
       </div>
-      <div className="w-6 sm:w-10 h-px bg-border group-hover:bg-blue-500 transition-colors" />
+      <div className="w-4 sm:w-6 md:w-10 h-px bg-border group-hover:bg-blue-500 transition-colors" />
     </div>
   );
 }
@@ -36,9 +36,9 @@ export function TrafficFunnel() {
     <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 h-full transition-all duration-500 ease-in-out flex flex-col">
       <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-6 text-center">Funil de Tráfego</h3>
       
-      <div className="relative flex-1 min-h-[200px] sm:min-h-[250px] md:min-h-[300px] w-full max-w-[320px] sm:max-w-[400px] mx-auto flex items-center justify-center">
+      <div className="relative flex-1 min-h-[180px] sm:min-h-[250px] md:min-h-[300px] w-full max-w-[280px] sm:max-w-[400px] mx-auto flex items-center justify-center">
         {/* Funnel Image Container - Aligned Left */}
-        <div className="absolute inset-y-0 left-0 flex items-center justify-start pr-20 sm:pr-24 md:pr-28">
+        <div className="absolute inset-y-0 left-0 flex items-center justify-start pr-16 sm:pr-24 md:pr-28">
           <img 
             src="/funnel.png" 
             alt="Funil de Tráfego" 
@@ -47,7 +47,7 @@ export function TrafficFunnel() {
         </div>
 
         {/* Data Points Layer - Aligned Right with offset */}
-        <div className="absolute inset-0 pl-16 sm:pl-20 md:pl-24">
+        <div className="absolute inset-0 pl-12 sm:pl-20 md:pl-24">
           {data.map((point) => (
             <FunnelDataPoint key={point.label} {...point} />
           ))}
