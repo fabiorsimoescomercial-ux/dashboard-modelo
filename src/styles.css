@@ -98,9 +98,9 @@
 }
 
 .dark {
-  --background: #1A1D24;
+  --background: #0a0e14;
   --foreground: oklch(0.95 0.01 240);
-  --card: #23272F;
+  --card: #111827;
   --card-foreground: oklch(0.95 0.01 240);
   --popover: oklch(0.18 0.02 240);
   --popover-foreground: oklch(0.95 0.01 240);

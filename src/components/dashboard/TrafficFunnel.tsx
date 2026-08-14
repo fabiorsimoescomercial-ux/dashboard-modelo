@@ -36,9 +36,9 @@ export function TrafficFunnel() {
     <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 h-full transition-all duration-500 ease-in-out flex flex-col">
       <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-6 text-center">Funil de Tráfego</h3>
       
-      <div className="relative flex-1 min-h-[250px] sm:min-h-[300px] w-full max-w-[340px] mx-auto">
+      <div className="relative flex-1 min-h-[250px] sm:min-h-[300px] w-full max-w-[340px] mx-auto flex items-center justify-center">
         {/* Funnel Image Container */}
-        <div className="absolute inset-0 flex items-center justify-start pr-20 sm:pr-24">
+        <div className="absolute inset-y-0 left-0 flex items-center justify-start pr-20 sm:pr-24">
           <img 
             src="/funnel.png" 
             alt="Funil de Tráfego" 
