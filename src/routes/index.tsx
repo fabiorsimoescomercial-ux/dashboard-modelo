@@ -253,8 +253,8 @@ function DashboardLayout() {
                         { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
                         { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", cost: "R$ 8,03", leads: 15, fill: 20 },
                       ].map((row, i) => (
-                        <tr key={i} className="text-xs text-slate-300 hover:bg-white/[0.02] transition-colors relative">
-                          <td className="px-6 py-4 font-medium text-white">{row.name}</td>
+                        <tr key={i} className="text-xs text-muted-foreground hover:bg-accent transition-colors relative">
+                          <td className="px-6 py-4 font-medium text-foreground">{row.name}</td>
                           <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
                             <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
                             <span className="relative z-10">{row.invest}</span>
@@ -267,7 +267,7 @@ function DashboardLayout() {
                           <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
                         </tr>
                       ))}
-                      <tr className="text-xs font-bold text-white bg-white/[0.02] border-t border-slate-700">
+                      <tr className="text-xs font-bold text-foreground bg-accent border-t border-border">
                         <td className="px-6 py-4">Total geral</td>
                         <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
                         <td className="px-6 py-4 text-right font-mono">24.363</td>
