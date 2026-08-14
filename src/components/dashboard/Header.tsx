@@ -82,7 +82,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
           {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
         </button>
 
-        <button className="relative rounded-full p-2 text-white/40 hover:bg-white/5 transition-colors">
+        <button className="relative rounded-full p-2 text-muted-foreground hover:bg-accent transition-colors duration-300">
           <Bell className="h-5 w-5" />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50" />
         </button>
