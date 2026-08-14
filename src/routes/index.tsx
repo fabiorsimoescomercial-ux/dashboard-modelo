@@ -152,16 +152,16 @@ function DashboardLayout() {
                 <div className="rounded-xl border border-slate-700 bg-[#23272F] p-6 shadow-lg shadow-black/20 flex flex-col min-h-[450px]">
                   <div className="flex items-center justify-between mb-8">
                     <div className="flex flex-col">
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Leads vs Investimento</h3>
+                      <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Leads vs Investimento</h3>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-blue-400" />
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Leads</span>
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Leads</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-blue-600" />
-                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Invest.</span>
+                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Invest.</span>
                       </div>
                     </div>
                   </div>
