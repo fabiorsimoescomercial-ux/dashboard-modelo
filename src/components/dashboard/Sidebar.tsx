@@ -27,7 +27,7 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
             <TrendingUp className="h-5 w-5" />
           </div>
           {isOpen && (
-            <span className="text-sm font-semibold tracking-wide text-white/90 truncate uppercase">
+            <span className="text-sm font-semibold tracking-wide text-foreground uppercase truncate">
               Visão Geral
             </span>
           )}
@@ -42,11 +42,11 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
               "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-all duration-200 group",
               item.active 
                 ? "bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20 shadow-inner" 
-                : "text-slate-400 hover:text-white hover:bg-white/5",
+                : "text-muted-foreground hover:text-foreground hover:bg-accent",
               !isOpen && "justify-center px-2"
             )}
           >
-            <item.icon className={cn("h-5 w-5 shrink-0 transition-transform group-hover:scale-110", item.active ? "text-[#38BDF8]" : "text-slate-400")} />
+            <item.icon className={cn("h-5 w-5 shrink-0 transition-transform group-hover:scale-110", item.active ? "text-[#38BDF8]" : "text-muted-foreground")} />
             {isOpen && <span>{item.name}</span>}
           </button>
         ))}
