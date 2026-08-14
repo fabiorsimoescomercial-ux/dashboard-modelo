@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   BarChart3, 
@@ -15,7 +15,9 @@ import {
   DollarSign, 
   LogOut,
   Settings2,
-  Facebook
+  Facebook,
+  Moon,
+  Sun
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,6 +39,22 @@ export const Route = createFileRoute("/")({
 function DashboardLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   const navItems = [
     { name: "Dashboard", icon: LayoutDashboard, active: true },
@@ -54,11 +72,11 @@ function DashboardLayout() {
   ];
 
   return (
-    <div className="flex h-screen w-full bg-slate-50/50">
+    <div className="flex h-screen w-full bg-slate-50/50 dark:bg-slate-950 transition-colors duration-300">
       {/* Sidebar - Desktop */}
       <aside 
         className={cn(
-          "hidden md:flex flex-col border-r bg-white transition-all duration-300 ease-in-out z-30",
+          "hidden md:flex flex-col border-r bg-white dark:bg-slate-900 dark:border-slate-800 transition-all duration-300 ease-in-out z-30",
           isSidebarOpen ? "w-64" : "w-20"
         )}
       >
@@ -113,7 +131,7 @@ function DashboardLayout() {
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Header Global */}
-        <header className="flex h-16 items-center justify-between border-b bg-white px-4 md:px-8 shrink-0 z-20">
+        <header className="flex h-16 items-center justify-between border-b bg-white dark:bg-slate-900 dark:border-slate-800 px-4 md:px-8 shrink-0 z-20 transition-colors duration-300">
           <div className="flex items-center gap-4">
             <button 
               className="md:hidden" 
@@ -125,13 +143,21 @@ function DashboardLayout() {
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input 
                 placeholder="Buscar no sistema..." 
-                className="pl-10 bg-slate-50 border-none ring-offset-background focus-visible:ring-1"
+                className="pl-10 bg-slate-50 dark:bg-slate-800 border-none ring-offset-background focus-visible:ring-1"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-3 md:gap-6">
-            <button className="relative rounded-full p-2 text-muted-foreground hover:bg-slate-100 transition-colors">
+          <div className="flex items-center gap-2 md:gap-4">
+            <button 
+              onClick={toggleTheme}
+              className="rounded-full p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title={theme === "light" ? "Mudar para tema escuro" : "Mudar para tema claro"}
+            >
+              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            </button>
+
+            <button className="relative rounded-full p-2 text-muted-foreground hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <Bell className="h-5 w-5" />
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-destructive" />
             </button>
@@ -198,9 +224,9 @@ function DashboardLayout() {
           {/* Quick Stats Grid */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
             {stats.map((stat) => (
-              <div key={stat.label} className="rounded-xl border bg-white p-6 shadow-sm">
+              <div key={stat.label} className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm transition-colors duration-300">
                 <div className="flex items-center justify-between mb-4">
-                  <div className={cn("rounded-lg bg-slate-100 p-2", stat.color)}>
+                  <div className={cn("rounded-lg bg-slate-100 dark:bg-slate-800 p-2", stat.color)}>
                     <stat.icon className="h-5 w-5" />
                   </div>
                   <span className={cn(
@@ -221,7 +247,7 @@ function DashboardLayout() {
           {/* Main Layout Grid */}
           <div className="grid gap-6 lg:grid-cols-3">
             {/* Chart Placeholder */}
-            <div className="lg:col-span-2 rounded-xl border bg-white p-6 shadow-sm min-h-[400px] flex flex-col">
+            <div className="lg:col-span-2 rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm min-h-[400px] flex flex-col transition-colors duration-300">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-foreground">Desempenho Semanal</h3>
                 <div className="flex gap-2">
@@ -229,7 +255,7 @@ function DashboardLayout() {
                   <Button variant="outline" size="sm">Excel</Button>
                 </div>
               </div>
-              <div className="flex-1 rounded-lg border-2 border-dashed border-slate-100 bg-slate-50/50 flex items-center justify-center">
+              <div className="flex-1 rounded-lg border-2 border-dashed border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex items-center justify-center">
                 <div className="text-center">
                   <BarChart3 className="h-12 w-12 text-slate-300 mx-auto mb-2" />
                   <p className="text-sm text-muted-foreground">Área reservada para gráficos</p>
@@ -238,7 +264,7 @@ function DashboardLayout() {
             </div>
 
             {/* List/Table Placeholder */}
-            <div className="rounded-xl border bg-white p-6 shadow-sm flex flex-col">
+            <div className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 p-6 shadow-sm flex flex-col transition-colors duration-300">
               <h3 className="text-lg font-semibold text-foreground mb-6">Atividades Recentes</h3>
               <div className="space-y-6 flex-1">
                 {[1, 2, 3, 4, 5].map((i) => (
