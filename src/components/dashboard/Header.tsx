@@ -102,11 +102,11 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
           <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-border" />
-            <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">
+            <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">
               <User className="mr-2 h-4 w-4" />
               <span>Perfil</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">
+            <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">
               <Settings2 className="mr-2 h-4 w-4" />
               <span>Configurações</span>
             </DropdownMenuItem>
