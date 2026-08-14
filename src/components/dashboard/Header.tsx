@@ -64,13 +64,13 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 ml-1" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-[#23272F] border-slate-700 text-white/90">
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Hoje</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Ontem</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Últimos 7 dias</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Últimos 30 dias</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Este mês</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Personalizado</DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Hoje</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Ontem</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Últimos 7 dias</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Últimos 30 dias</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Este mês</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Personalizado</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
