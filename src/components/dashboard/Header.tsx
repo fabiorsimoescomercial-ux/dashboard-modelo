@@ -91,17 +91,17 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-3 rounded-full outline-none hover:opacity-80 transition-opacity pl-2">
               <div className="text-right hidden md:block">
-                <p className="text-xs font-semibold leading-none text-white/90">Olá, Visitante</p>
-                <p className="text-[10px] text-white/30 uppercase tracking-widest mt-1">Admin</p>
+                <p className="text-xs font-semibold leading-none text-foreground/90">Olá, Visitante</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Admin</p>
               </div>
-              <div className="h-8 w-8 overflow-hidden rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
-                <User className="h-4 w-4 text-blue-400" />
+              <div className="h-8 w-8 overflow-hidden rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
+                <User className="h-4 w-4 text-primary" />
               </div>
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-[#1a222d] border-white/5 text-white/90">
+          <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
             <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-white/5" />
+            <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">
               <User className="mr-2 h-4 w-4" />
               <span>Perfil</span>
