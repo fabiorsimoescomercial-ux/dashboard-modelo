@@ -17,7 +17,7 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
   return (
     <aside 
       className={cn(
-        "hidden md:flex flex-col border-r border-border bg-[#0F1218] transition-all duration-500 ease-in-out z-30",
+        "hidden lg:flex flex-col border-r border-border bg-[#0F1218] transition-all duration-500 ease-in-out z-30",
         isOpen ? "w-64" : "w-20"
       )}
     >
