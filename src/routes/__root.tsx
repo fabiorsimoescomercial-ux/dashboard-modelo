@@ -78,14 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Personalizze Dashboard" },
-      { name: "description", content: "Dashboard moderno e responsivo para gestão de indicadores." },
+      { name: "description", content: "Dashboard de Gestão e Performance." },
       { name: "author", content: "Personalizze" },
       { property: "og:title", content: "Personalizze Dashboard" },
-      { property: "og:description", content: "Dashboard moderno e responsivo para gestão de indicadores." },
+      { property: "og:description", content: "Dashboard de Gestão e Performance." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://project--a4426e19-b75d-4caf-bbd2-f5a39957c344.lovable.app/__l5e/assets-v1/c00dd6c2-86a3-4b3f-9d32-ab0941bbbab7/og-image.png" },
+      { property: "og:image", content: "" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://project--a4426e19-b75d-4caf-bbd2-f5a39957c344.lovable.app/__l5e/assets-v1/c00dd6c2-86a3-4b3f-9d32-ab0941bbbab7/og-image.png" },
+      { name: "twitter:image", content: "" },
     ],
     links: [
       {
