@@ -50,9 +50,9 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 bg-[#23272F] border-slate-700 text-white/90">
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">Todas as Campanhas</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-white/5 focus:text-white">[Evolution][Conversoes]</DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-56 bg-card border-border text-foreground/90">
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">Todas as Campanhas</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer focus:bg-accent focus:text-accent-foreground">[Evolution][Conversoes]</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
