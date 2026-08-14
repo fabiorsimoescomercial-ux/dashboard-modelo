@@ -36,7 +36,7 @@ export function StatCard({ label, value, change, sparklineColor = "#3b82f6" }: S
   }
 
   return (
-    <div className="rounded-xl border border-slate-700 bg-[#23272F] p-5 shadow-lg shadow-black/20 transition-all duration-300 hover:border-slate-600 group">
+    <div className="rounded-xl border border-border bg-card p-5 shadow-lg shadow-black/5 transition-all duration-500 ease-in-out hover:border-primary/50 group">
       <div className="flex flex-col mb-4">
         <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">{label}</p>
         <h3 className="text-xl font-bold text-foreground tracking-tight transition-colors duration-500">{value}</h3>
