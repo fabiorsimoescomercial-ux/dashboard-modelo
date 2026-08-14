@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { createFileRoute } from "@tanstack/react-router";
+import { CookieConsent } from "@/components/CookieConsent";
 
 export const Route = createFileRoute("/")({
   component: DashboardLayout,
@@ -144,6 +145,11 @@ function DashboardLayout() {
               <Input 
                 placeholder="Buscar no sistema..." 
                 className="pl-10 bg-slate-50 dark:bg-slate-800 border-none ring-offset-background focus-visible:ring-1"
+                onChange={(e) => {
+                  // Basic sanitization for UI display/search
+                  const sanitized = e.target.value.replace(/[<>]/g, "");
+                  if (sanitized !== e.target.value) e.target.value = sanitized;
+                }}
               />
             </div>
           </div>
@@ -320,6 +326,7 @@ function DashboardLayout() {
           </div>
         </div>
       )}
+      <CookieConsent />
     </div>
   );
 }
