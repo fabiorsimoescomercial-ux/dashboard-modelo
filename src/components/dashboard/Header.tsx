@@ -24,7 +24,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
           className="md:hidden" 
           onClick={onToggleMobileMenu}
         >
-          <Search className="h-6 w-6 text-slate-400" />
+          <Search className="h-6 w-6 text-muted-foreground" />
         </button>
         
         <div className="flex items-center gap-4">
@@ -35,7 +35,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
             </svg>
             <div className="flex flex-col">
               <span className="text-xs font-bold text-white uppercase tracking-tighter leading-tight">Meta</span>
-              <span className="text-[10px] font-medium text-slate-400 tracking-tight leading-tight">Dashboard Meta Ads | <span className="italic font-bold text-white">Personalizze</span></span>
+              <span className="text-[10px] font-medium text-muted-foreground tracking-tight leading-tight">Dashboard Meta Ads | <span className="italic font-bold text-foreground">Personalizze</span></span>
             </div>
           </div>
         </div>
