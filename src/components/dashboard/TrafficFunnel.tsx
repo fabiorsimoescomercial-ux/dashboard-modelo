@@ -42,8 +42,8 @@ export function TrafficFunnel() {
   ];
 
   return (
-    <div className="rounded-xl border border-slate-700 bg-[#23272F] p-6 shadow-lg shadow-black/20 h-full">
-      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 text-center">Funil de Tráfego</h3>
+    <div className="rounded-xl border border-border bg-card p-6 shadow-lg shadow-black/5 h-full transition-all duration-500 ease-in-out">
+      <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-8 text-center">Funil de Tráfego</h3>
       <div className="flex flex-col items-center space-y-0 max-w-md mx-auto">
         {steps.map((step, index) => (
           <FunnelStep 
@@ -53,17 +53,17 @@ export function TrafficFunnel() {
           />
         ))}
       </div>
-      <div className="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center px-2">
+      <div className="mt-8 pt-6 border-t border-border flex justify-between items-center px-2">
         <div className="text-center">
-          <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">CTR Geral</p>
+          <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">CTR Geral</p>
           <p className="text-sm font-bold text-[#38BDF8]">1.72%</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Taxa Conv.</p>
+          <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">Taxa Conv.</p>
           <p className="text-sm font-bold text-[#38BDF8]">21.37%</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Freq.</p>
+          <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">Freq.</p>
           <p className="text-sm font-bold text-[#38BDF8]">1.18</p>
         </div>
       </div>
