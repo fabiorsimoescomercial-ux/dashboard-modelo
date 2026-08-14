@@ -66,5 +66,3 @@ export function StatCard({ label, value, change, sparklineColor = "#3b82f6" }: S
     </div>
   );
 }
-  );
-}
