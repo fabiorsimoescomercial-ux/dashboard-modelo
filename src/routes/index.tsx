@@ -306,8 +306,8 @@ function DashboardLayout() {
             className="h-full w-64 bg-[#0a0e14] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex h-16 items-center justify-between border-b border-white/5 px-6">
-              <span className="text-lg font-bold text-white uppercase tracking-tighter italic">Personalizze</span>
+            <div className="flex h-16 items-center justify-between border-b border-slate-700 px-6">
+              <span className="text-lg font-bold text-white italic uppercase tracking-tighter italic">Personalizze</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="h-6 w-6 text-muted-foreground" />
               </button>
