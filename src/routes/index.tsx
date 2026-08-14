@@ -67,41 +67,36 @@ function DashboardLayout() {
   const navItems: NavItem[] = [
     { name: "Visão Geral", icon: LayoutDashboard, active: true },
     { name: "Mobile", icon: Smartphone, active: false },
-    { name: "Relatórios", icon: BarChart3, active: false },
-    { name: "Configurações", icon: Settings, active: false },
   ];
 
   const stats = [
-    { label: "Investimento", value: "R$ 6.307,85", change: "+4.1%", sparklineColor: "#ef4444" },
-    { label: "CPM", value: "R$ 20,13", change: "-0.8%", sparklineColor: "#22c55e" },
-    { label: "CPC", value: "R$ 0,81", change: "-1.2%", sparklineColor: "#22c55e" },
-    { label: "Custo por Lead", value: "R$ 9,46", change: "-15.4%", sparklineColor: "#22c55e" },
+    { label: "Investimento", value: "R$ 621,50", change: "-79.3%" },
+    { label: "CPM", value: "R$ 25,51", change: "-16.2%" },
+    { label: "CPC", value: "R$ 1,48", change: "22.0%" },
+    { label: "Custo por Lead WhatsApp", value: "R$ 6,91", change: "-23.6%" },
   ];
 
   const chartData = [
-    { date: "01/08", investment: 450, leads: 42 },
-    { date: "02/08", investment: 520, leads: 48 },
-    { date: "03/08", investment: 480, leads: 45 },
-    { date: "04/08", investment: 610, leads: 58 },
-    { date: "05/08", investment: 580, leads: 52 },
-    { date: "06/08", investment: 490, leads: 44 },
-    { date: "07/08", investment: 550, leads: 50 },
-    { date: "08/08", investment: 620, leads: 62 },
-    { date: "09/08", investment: 590, leads: 55 },
-    { date: "10/08", investment: 470, leads: 40 },
-    { date: "11/08", investment: 530, leads: 49 },
-    { date: "12/08", investment: 640, leads: 65 },
-    { date: "13/08", investment: 610, leads: 59 },
+    { date: "04/08", investment: 120, leads: 40 },
+    { date: "05/08", investment: 180, leads: 480 },
+    { date: "06/08", investment: 150, leads: 120 },
+    { date: "07/08", investment: 220, leads: 90 },
+    { date: "08/08", investment: 200, leads: 70 },
+    { date: "09/08", investment: 170, leads: 110 },
+    { date: "10/08", investment: 240, leads: 85 },
+    { date: "11/08", investment: 210, leads: 95 },
+    { date: "12/08", investment: 260, leads: 105 },
+    { date: "13/08", investment: 230, leads: 90 },
   ];
 
   const chartConfig = {
     investment: {
       label: "Investimento (R$)",
-      color: "#ef4444",
+      color: "#3b82f6",
     },
     leads: {
       label: "Lead WhatsApp",
-      color: "#3b82f6",
+      color: "#38BDF8",
     },
   } satisfies ChartConfig;
 
@@ -120,13 +115,13 @@ function DashboardLayout() {
           onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
         />
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8">
+        <main className="flex-1 overflow-y-auto bg-[#1A1D24] p-4 md:p-8 space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/30">
+              <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <span>Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
-                <span className="text-white/60">Visão Geral</span>
+                <span className="text-white">Visão Geral</span>
               </nav>
               <h1 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
                 Visão Geral
@@ -150,143 +145,169 @@ function DashboardLayout() {
 
           <div className="grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 space-y-6">
-              <div className="rounded-xl border border-white/5 bg-[#1a222d] p-6 shadow-lg shadow-black/20 flex flex-col min-h-[450px]">
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-red-500" />
-                      <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Investimento</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-500" />
-                      <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Lead WhatsApp</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Diário</div>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <TrafficFunnel />
                 
-                <div className="flex-1 min-h-[300px] w-full">
-                  <ChartContainer config={chartConfig} className="w-full h-full aspect-auto">
-                    <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                      <XAxis 
-                        dataKey="date" 
-                        axisLine={false} 
-                        tickLine={false} 
-                        tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 'bold' }}
-                        dy={10}
-                      />
-                      <YAxis 
-                        axisLine={false} 
-                        tickLine={false} 
-                        tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 'bold' }}
-                      />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Line 
-                        type="monotone" 
-                        dataKey="investment" 
-                        stroke="var(--color-investment)" 
-                        strokeWidth={3} 
-                        dot={false}
-                        activeDot={{ r: 4, fill: '#ef4444', stroke: '#1a222d', strokeWidth: 2 }}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="leads" 
-                        stroke="var(--color-leads)" 
-                        strokeWidth={3} 
-                        dot={false}
-                        activeDot={{ r: 4, fill: '#3b82f6', stroke: '#1a222d', strokeWidth: 2 }}
-                      />
-                    </LineChart>
-                  </ChartContainer>
+                <div className="rounded-xl border border-slate-700 bg-[#23272F] p-6 shadow-lg shadow-black/20 flex flex-col min-h-[450px]">
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex flex-col">
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Leads vs Investimento</h3>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-blue-400" />
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Leads</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-blue-600" />
+                        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">Invest.</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 min-h-[300px] w-full">
+                    <ChartContainer config={chartConfig} className="w-full h-full aspect-auto">
+                      <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                        <XAxis 
+                          dataKey="date" 
+                          axisLine={false} 
+                          tickLine={false} 
+                          tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 'bold' }}
+                          dy={10}
+                        />
+                        <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
+                        <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Line yAxisId="left" type="monotone" dataKey="leads" stroke="var(--color-leads)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
+                        <Line yAxisId="right" type="monotone" dataKey="investment" stroke="var(--color-investment)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
+                      </LineChart>
+                    </ChartContainer>
+                  </div>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-white/5 bg-[#1a222d] shadow-lg shadow-black/20 overflow-hidden">
-                <div className="p-6 border-b border-white/5">
-                  <h3 className="text-xs font-bold text-white/60 uppercase tracking-widest">Performance por Criativo</h3>
+              <div className="rounded-xl border border-slate-700 bg-[#23272F] shadow-lg shadow-black/20 overflow-hidden">
+                <div className="p-6 border-b border-slate-700">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Performance por Criativo</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="text-[10px] font-bold text-white/20 uppercase tracking-widest border-b border-white/5">
-                        <th className="px-6 py-4 font-bold">Criativo</th>
-                        <th className="px-6 py-4 font-bold text-right">Cliques</th>
-                        <th className="px-6 py-4 font-bold text-right">Leads</th>
-                        <th className="px-6 py-4 font-bold text-right">Custo/Lead</th>
-                        <th className="px-6 py-4 font-bold text-right">CTR</th>
+                      <tr className="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700">
+                        <th className="px-6 py-4">Criativo</th>
+                        <th className="px-6 py-4 text-right">Impressions</th>
+                        <th className="px-6 py-4 text-right">Lead</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/5">
+                    <tbody className="divide-y divide-slate-700">
                       {[
-                        { id: 1, name: "Video_Promo_Agosto", clicks: 1243, leads: 98, cost: "R$ 8,42", ctr: "2.84%" },
-                        { id: 2, name: "Image_Carousel_Main", clicks: 856, leads: 64, cost: "R$ 9,15", ctr: "1.92%" },
-                        { id: 3, name: "User_Testimonial_01", clicks: 542, leads: 42, cost: "R$ 7,88", ctr: "3.15%" },
+                        { id: 1, name: "[V 06] [CTA POLO][Copy Atualizada]", impressions: "8.988", leads: 40 },
+                        { id: 2, name: "[V 02] [Copy V01][Direto]", impressions: "5.421", leads: 28 },
+                        { id: 3, name: "[I 01] [Estático][Fixo]", impressions: "3.210", leads: 15 },
                       ].map((creative) => (
-                        <tr key={creative.id} className="text-xs text-white/70 hover:bg-white/[0.02] transition-colors">
+                        <tr key={creative.id} className="text-xs text-slate-300 hover:bg-white/[0.02] transition-colors">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded bg-white/5 border border-white/10 shrink-0" />
-                              <span className="font-medium text-white/90">{creative.name}</span>
+                              <div className="w-10 h-10 rounded bg-slate-800 border border-slate-700 shrink-0" />
+                              <span className="font-medium text-white truncate max-w-[200px]">{creative.name}</span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-right font-mono">{creative.clicks}</td>
-                          <td className="px-6 py-4 text-right font-mono">{creative.leads}</td>
-                          <td className="px-6 py-4 text-right font-mono text-green-400">{creative.cost}</td>
-                          <td className="px-6 py-4 text-right font-mono text-blue-400">{creative.ctr}</td>
+                          <td className="px-6 py-4 text-right font-mono">{creative.impressions}</td>
+                          <td className="px-6 py-4 text-right font-mono text-blue-400">{creative.leads}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                  <div className="px-6 py-3 border-t border-slate-700 flex justify-end items-center gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                    <span>1 - 15 / 15</span>
+                    <div className="flex gap-2">
+                      <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
+                      <button className="hover:text-white"><ChevronRight className="h-3 w-3" /></button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="space-y-6">
-              <TrafficFunnel />
-              
-              <div className="rounded-xl border border-white/5 bg-[#1a222d] p-6 shadow-lg shadow-black/20">
-                <h3 className="text-xs font-bold text-white/60 uppercase tracking-widest mb-6">Próximos Passos</h3>
-                <div className="space-y-4">
-                  {[
-                    { label: "Otimizar CBO", desc: "Campanha 'Vendas_Direct' acima do CPA ideal", priority: "Alta" },
-                    { label: "Atualizar Criativos", desc: "Fadiga detectada no criativo 'Video_02'", priority: "Média" },
-                  ].map((step, i) => (
-                    <div key={i} className="group cursor-pointer">
-                      <div className="flex items-start justify-between mb-1">
-                        <span className="text-xs font-bold text-white group-hover:text-blue-400 transition-colors">{step.label}</span>
-                        <span className={cn(
-                          "text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter",
-                          step.priority === "Alta" ? "bg-red-500/10 text-red-500" : "bg-orange-500/10 text-orange-500"
-                        )}>{step.priority}</span>
-                      </div>
-                      <p className="text-[10px] text-white/40 leading-relaxed">{step.desc}</p>
-                    </div>
-                  ))}
+              <div className="rounded-xl border border-slate-700 bg-[#23272F] shadow-lg shadow-black/20 overflow-hidden lg:col-span-3">
+                <div className="p-6 border-b border-slate-700 flex items-center justify-between">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tabela de Campanhas</h3>
                 </div>
-                <Button variant="link" className="mt-6 text-[10px] font-bold text-blue-400 uppercase tracking-widest p-0 h-auto flex items-center gap-1 group">
-                  Ver Análise Completa <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                </Button>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-700">
+                        <th className="px-6 py-4 font-bold">Campanha</th>
+                        <th className="px-6 py-4 font-bold text-right">Investimento</th>
+                        <th className="px-6 py-4 font-bold text-right">Impressões</th>
+                        <th className="px-6 py-4 font-bold text-right">Custo p/ lead</th>
+                        <th className="px-6 py-4 font-bold text-right">Lead</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-700">
+                      {[
+                        { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", cost: "R$ 9,18", leads: 27, fill: 40 },
+                        { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
+                        { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", cost: "R$ 8,03", leads: 15, fill: 20 },
+                      ].map((row, i) => (
+                        <tr key={i} className="text-xs text-slate-300 hover:bg-white/[0.02] transition-colors relative">
+                          <td className="px-6 py-4 font-medium text-white">{row.name}</td>
+                          <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
+                            <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
+                            <span className="relative z-10">{row.invest}</span>
+                          </td>
+                          <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
+                            <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill-5}%` }} />
+                            <span className="relative z-10">{row.impressions}</span>
+                          </td>
+                          <td className="px-6 py-4 text-right font-mono text-green-400">{row.cost}</td>
+                          <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
+                        </tr>
+                      ))}
+                      <tr className="text-xs font-bold text-white bg-white/[0.02] border-t border-slate-700">
+                        <td className="px-6 py-4">Total geral</td>
+                        <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
+                        <td className="px-6 py-4 text-right font-mono">24.363</td>
+                        <td className="px-6 py-4 text-right font-mono text-green-400">R$ 6,91</td>
+                        <td className="px-6 py-4 text-right font-mono text-blue-400">90</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="px-6 py-3 border-t border-slate-700 flex justify-end items-center gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                    <span>1 - 15 / 15</span>
+                    <div className="flex gap-2">
+                      <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
+                      <button className="hover:text-white"><ChevronRight className="h-3 w-3" /></button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </main>
+        
+        <footer className="bg-[#1A1D24] px-8 py-4 border-t border-slate-700">
+          <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+            Dados atualizados pela última vez: 14/08/2026 09:06:09 (alguns itens na página não foram atualizados) | 
+            <a href="#" className="underline ml-1 hover:text-white transition-colors">Política de Privacidade</a>
+          </p>
+        </footer>
+
       </div>
 
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <div 
-            className="h-full w-64 bg-[#0a0e14] shadow-2xl"
+            className="h-full w-64 bg-[#0F1218] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex h-16 items-center justify-between border-b border-white/5 px-6">
-              <span className="text-lg font-bold text-white uppercase tracking-tighter italic">Personalizze</span>
+            <div className="flex h-16 items-center justify-between border-b border-slate-700 px-6">
+              <span className="text-lg font-bold text-white italic uppercase tracking-tighter italic">Personalizze</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="h-6 w-6 text-muted-foreground" />
               </button>

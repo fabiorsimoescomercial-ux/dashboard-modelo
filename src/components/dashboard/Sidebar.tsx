@@ -17,7 +17,7 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
   return (
     <aside 
       className={cn(
-        "hidden md:flex flex-col border-r border-white/5 bg-[#0a0e14] transition-all duration-300 ease-in-out z-30",
+        "hidden md:flex flex-col border-r border-white/5 bg-[#0F1218] transition-all duration-300 ease-in-out z-30",
         isOpen ? "w-64" : "w-20"
       )}
     >
@@ -41,30 +41,30 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
             className={cn(
               "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-all duration-200 group",
               item.active 
-                ? "bg-blue-600/10 text-blue-400 border border-blue-500/20 shadow-inner" 
-                : "text-white/40 hover:text-white/70 hover:bg-white/5",
+                ? "bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20 shadow-inner" 
+                : "text-slate-400 hover:text-white hover:bg-white/5",
               !isOpen && "justify-center px-2"
             )}
           >
-            <item.icon className={cn("h-5 w-5 shrink-0 transition-transform group-hover:scale-110", item.active ? "text-blue-400" : "text-white/40")} />
+            <item.icon className={cn("h-5 w-5 shrink-0 transition-transform group-hover:scale-110", item.active ? "text-[#38BDF8]" : "text-slate-400")} />
             {isOpen && <span>{item.name}</span>}
           </button>
         ))}
       </nav>
 
-      <div className="border-t border-white/5 p-4">
+      <div className="border-t border-slate-700 p-4">
         <button 
           onClick={onToggle}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium text-white/30 hover:text-white/60 transition-colors group"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-bold text-slate-500 hover:text-[#38BDF8] transition-colors group uppercase tracking-widest"
         >
           {isOpen ? (
             <>
-              <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+              <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <span>Recolher</span>
             </>
           ) : (
             <div className="flex w-full justify-center">
-              <ChevronLeft className="h-5 w-5 rotate-180" />
+              <ChevronLeft className="h-4 w-4 rotate-180" />
             </div>
           )}
         </button>
