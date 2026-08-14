@@ -9,7 +9,12 @@ import {
   DollarSign,
   ChevronRight,
   Facebook,
-  X
+  X,
+  Smartphone,
+  Eye,
+  MousePointer2,
+  MessageSquare,
+  ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
@@ -17,6 +22,22 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { Sidebar, type NavItem } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { StatCard } from "@/components/dashboard/StatCard";
+import { TrafficFunnel } from "@/components/dashboard/TrafficFunnel";
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent,
+  type ChartConfig 
+} from "@/components/ui/chart";
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  ResponsiveContainer,
+  Legend
+} from "recharts";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
