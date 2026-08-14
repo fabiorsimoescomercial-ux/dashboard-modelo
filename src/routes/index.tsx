@@ -120,7 +120,7 @@ function DashboardLayout() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                <span>Dashboard</span>
+                <span className="text-muted-foreground">Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
                 <span className="text-foreground">Visão Geral</span>
               </nav>
@@ -267,7 +267,7 @@ function DashboardLayout() {
                           <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
                         </tr>
                       ))}
-                      <tr className="text-xs font-bold text-foreground bg-accent border-t border-border">
+                      <tr className="text-xs font-bold text-foreground bg-muted/30 border-t border-border">
                         <td className="px-6 py-4">Total geral</td>
                         <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
                         <td className="px-6 py-4 text-right font-mono">24.363</td>
@@ -308,7 +308,7 @@ function DashboardLayout() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex h-16 items-center justify-between border-b border-border px-6">
-              <span className="text-lg font-bold text-foreground italic uppercase tracking-tighter italic">Personalizze</span>
+              <span className="text-lg font-bold text-foreground italic uppercase tracking-tighter">Personalizze</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <X className="h-6 w-6 text-muted-foreground" />
               </button>
