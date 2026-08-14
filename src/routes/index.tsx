@@ -297,7 +297,7 @@ function DashboardLayout() {
                   key={item.name}
                   className={cn(
                     "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors",
-                    item.active ? "bg-primary/10 text-primary" : "text-muted-foreground"
+                    item.active ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-white/40"
                   )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
