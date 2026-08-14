@@ -52,19 +52,19 @@ export function Sidebar({ isOpen, onToggle, items }: SidebarProps) {
         ))}
       </nav>
 
-      <div className="border-t border-white/5 p-4">
+      <div className="border-t border-slate-700 p-4">
         <button 
           onClick={onToggle}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium text-white/30 hover:text-white/60 transition-colors group"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-bold text-slate-500 hover:text-[#38BDF8] transition-colors group uppercase tracking-widest"
         >
           {isOpen ? (
             <>
-              <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+              <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <span>Recolher</span>
             </>
           ) : (
             <div className="flex w-full justify-center">
-              <ChevronLeft className="h-5 w-5 rotate-180" />
+              <ChevronLeft className="h-4 w-4 rotate-180" />
             </div>
           )}
         </button>
