@@ -190,7 +190,7 @@ function DashboardLayout() {
 
               <div className="rounded-xl border border-slate-700 bg-[#23272F] shadow-lg shadow-black/20 overflow-hidden">
                 <div className="p-6 border-b border-slate-700">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Performance por Criativo</h3>
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Performance por Criativo</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
@@ -207,11 +207,11 @@ function DashboardLayout() {
                         { id: 2, name: "[V 02] [Copy V01][Direto]", impressions: "5.421", leads: 28 },
                         { id: 3, name: "[I 01] [Estático][Fixo]", impressions: "3.210", leads: 15 },
                       ].map((creative) => (
-                        <tr key={creative.id} className="text-xs text-slate-300 hover:bg-white/[0.02] transition-colors">
+                        <tr key={creative.id} className="text-xs text-muted-foreground hover:bg-accent transition-colors">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded bg-slate-800 border border-slate-700 shrink-0" />
-                              <span className="font-medium text-white truncate max-w-[200px]">{creative.name}</span>
+                              <span className="font-medium text-foreground truncate max-w-[200px]">{creative.name}</span>
                             </div>
                           </td>
                           <td className="px-6 py-4 text-right font-mono">{creative.impressions}</td>
@@ -234,7 +234,7 @@ function DashboardLayout() {
             <div className="space-y-6">
               <div className="rounded-xl border border-slate-700 bg-[#23272F] shadow-lg shadow-black/20 overflow-hidden lg:col-span-3">
                 <div className="p-6 border-b border-slate-700 flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tabela de Campanhas</h3>
+                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
