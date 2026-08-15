@@ -164,50 +164,107 @@ function DashboardLayout() {
           <div className="flex flex-col gap-6">
             <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
               <div className="lg:col-span-2 space-y-6 overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-                <TrafficFunnel />
-                
-                <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 flex flex-col min-h-[350px] md:min-h-full transition-all duration-500 ease-in-out overflow-hidden">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
-                    <div className="flex flex-col">
-                      <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Leads vs Investimento</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                  <TrafficFunnel />
+                  
+                  <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 flex flex-col min-h-[350px] md:min-h-full transition-all duration-500 ease-in-out overflow-hidden">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+                      <div className="flex flex-col">
+                        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Leads vs Investimento</h3>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-blue-400" />
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Leads</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-blue-600" />
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Invest.</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-400" />
-                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Leads</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-600" />
-                        <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Invest.</span>
-                      </div>
+                    
+                    <div className="flex-1 min-h-[300px] w-full">
+                      <ChartContainer config={chartConfig} className="w-full h-full aspect-auto">
+                        <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                          <XAxis 
+                            dataKey="date" 
+                            axisLine={false} 
+                            tickLine={false} 
+                            tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 'bold' }}
+                            dy={10}
+                          />
+                          <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
+                          <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Line yAxisId="left" type="monotone" dataKey="leads" stroke="var(--color-leads)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
+                          <Line yAxisId="right" type="monotone" dataKey="investment" stroke="var(--color-investment)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
+                        </LineChart>
+                      </ChartContainer>
                     </div>
                   </div>
-                  
-                  <div className="flex-1 min-h-[300px] w-full">
-                    <ChartContainer config={chartConfig} className="w-full h-full aspect-auto">
-                      <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                        <XAxis 
-                          dataKey="date" 
-                          axisLine={false} 
-                          tickLine={false} 
-                          tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 'bold' }}
-                          dy={10}
-                        />
-                        <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
-                        <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Line yAxisId="left" type="monotone" dataKey="leads" stroke="var(--color-leads)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
-                        <Line yAxisId="right" type="monotone" dataKey="investment" stroke="var(--color-investment)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
-                      </LineChart>
-                    </ChartContainer>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
+                  <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between">
+                    <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
+                  </div>
+                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
+                    <table className="w-full text-left min-w-[500px] sm:min-w-full border-collapse">
+                      <thead>
+                        <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
+                          <th className="px-4 sm:px-6 py-4 font-bold">Campanha</th>
+                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Investimento</th>
+                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Impressões</th>
+                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Custo p/ lead</th>
+                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Lead</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        {[
+                          { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", cost: "R$ 9,18", leads: 27, fill: 40 },
+                          { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
+                          { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", cost: "R$ 8,03", leads: 15, fill: 20 },
+                        ].map((row, i) => (
+                          <tr key={i} className="text-xs text-muted-foreground hover:bg-accent transition-colors relative">
+                            <td className="px-6 py-4 font-medium text-foreground">{row.name}</td>
+                            <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
+                              <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
+                              <span className="relative z-10">{row.invest}</span>
+                            </td>
+                            <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
+                              <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill-5}%` }} />
+                              <span className="relative z-10">{row.impressions}</span>
+                            </td>
+                            <td className="px-6 py-4 text-right font-mono text-green-400">{row.cost}</td>
+                            <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
+                          </tr>
+                        ))}
+                        <tr className="text-xs font-bold text-foreground bg-muted/30 border-t border-border">
+                          <td className="px-6 py-4">Total geral</td>
+                          <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
+                          <td className="px-6 py-4 text-right font-mono">24.363</td>
+                          <td className="px-6 py-4 text-right font-mono text-green-400">R$ 6,91</td>
+                          <td className="px-6 py-4 text-right font-mono text-blue-400">90</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                      <span>1 - 15 / 15</span>
+                      <div className="flex gap-2">
+                        <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
+                        <button className="hover:text-white"><ChevronRight className="h-3 w-3" /></button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="w-full">
               <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
                 <div className="p-4 sm:p-6 border-b border-border">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest text-center sm:text-left">Performance por Criativo</h3>
@@ -238,62 +295,6 @@ function DashboardLayout() {
                           <td className="px-6 py-4 text-right font-mono text-blue-400">{creative.leads}</td>
                         </tr>
                       ))}
-                    </tbody>
-                  </table>
-                  <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                    <span>1 - 15 / 15</span>
-                    <div className="flex gap-2">
-                      <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
-                      <button className="hover:text-white"><ChevronRight className="h-3 w-3" /></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full">
-              <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
-                <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
-                </div>
-                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
-                  <table className="w-full text-left min-w-[500px] sm:min-w-full border-collapse">
-                    <thead>
-                      <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
-                        <th className="px-4 sm:px-6 py-4 font-bold">Campanha</th>
-                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Investimento</th>
-                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Impressões</th>
-                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Custo p/ lead</th>
-                        <th className="px-4 sm:px-6 py-4 font-bold text-right">Lead</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border">
-                      {[
-                        { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", cost: "R$ 9,18", leads: 27, fill: 40 },
-                        { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
-                        { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", cost: "R$ 8,03", leads: 15, fill: 20 },
-                      ].map((row, i) => (
-                        <tr key={i} className="text-xs text-muted-foreground hover:bg-accent transition-colors relative">
-                          <td className="px-6 py-4 font-medium text-foreground">{row.name}</td>
-                          <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
-                            <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
-                            <span className="relative z-10">{row.invest}</span>
-                          </td>
-                          <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
-                            <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill-5}%` }} />
-                            <span className="relative z-10">{row.impressions}</span>
-                          </td>
-                          <td className="px-6 py-4 text-right font-mono text-green-400">{row.cost}</td>
-                          <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
-                        </tr>
-                      ))}
-                      <tr className="text-xs font-bold text-foreground bg-muted/30 border-t border-border">
-                        <td className="px-6 py-4">Total geral</td>
-                        <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
-                        <td className="px-6 py-4 text-right font-mono">24.363</td>
-                        <td className="px-6 py-4 text-right font-mono text-green-400">R$ 6,91</td>
-                        <td className="px-6 py-4 text-right font-mono text-blue-400">90</td>
-                      </tr>
                     </tbody>
                   </table>
                   <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
