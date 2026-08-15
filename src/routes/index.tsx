@@ -125,15 +125,15 @@ function DashboardLayout() {
   } satisfies ChartConfig;
 
   return (
-    <div className="flex h-screen w-full bg-background transition-colors duration-500 ease-in-out">
-      <div className="flex flex-1 flex-col overflow-hidden">
+    <div className="flex h-screen w-full bg-background transition-colors duration-500 ease-in-out overflow-x-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden w-full max-w-full">
         <Header 
           theme={theme} 
           onToggleTheme={toggleTheme} 
           onToggleMobileMenu={() => setIsMobileMenuOpen(true)} 
         />
 
-        <main className="flex-1 overflow-y-auto bg-background p-3 sm:p-4 md:p-8 space-y-6 sm:space-y-8 transition-colors duration-500 ease-in-out">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-background p-3 sm:p-4 md:p-8 space-y-6 sm:space-y-8 transition-colors duration-500 ease-in-out">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
@@ -161,12 +161,12 @@ function DashboardLayout() {
             ))}
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+            <div className="lg:col-span-2 space-y-6 overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 <TrafficFunnel />
                 
-                <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 flex flex-col min-h-[300px] sm:min-h-[450px] transition-all duration-500 ease-in-out">
+                <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 flex flex-col min-h-[350px] md:min-h-full transition-all duration-500 ease-in-out overflow-hidden">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
                     <div className="flex flex-col">
                       <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Leads vs Investimento</h3>
@@ -209,8 +209,8 @@ function DashboardLayout() {
                 <div className="p-4 sm:p-6 border-b border-border">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest text-center sm:text-left">Performance por Criativo</h3>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left min-w-[400px]">
+                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
+                  <table className="w-full text-left min-w-[350px] sm:min-w-full border-collapse">
                     <thead>
                       <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                         <th className="px-4 sm:px-6 py-4">Criativo</th>
@@ -228,7 +228,7 @@ function DashboardLayout() {
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded bg-slate-800 border border-slate-700 shrink-0" />
-                              <span className="font-medium text-foreground truncate max-w-[200px]">{creative.name}</span>
+                              <span className="font-medium text-foreground truncate max-w-[120px] sm:max-w-[200px]">{creative.name}</span>
                             </div>
                           </td>
                           <td className="px-6 py-4 text-right font-mono">{creative.impressions}</td>
@@ -253,8 +253,8 @@ function DashboardLayout() {
                 <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left min-w-[600px]">
+                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
+                  <table className="w-full text-left min-w-[500px] sm:min-w-full border-collapse">
                     <thead>
                       <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                         <th className="px-4 sm:px-6 py-4 font-bold">Campanha</th>
