@@ -21,7 +21,7 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
     <header className="flex h-16 items-center justify-between border-b border-border bg-[#0a0e14] px-4 md:px-8 shrink-0 z-20 transition-all duration-500 ease-in-out">
       <div className="flex items-center gap-2 md:gap-6 overflow-hidden">
         <div className="flex items-center gap-2 md:gap-4 shrink-0">
-          <div className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <svg viewBox="0 0 24 24" className="h-5 w-5 md:h-6 md:w-6 text-[#38BDF8] fill-current shrink-0" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
               <path d="M16.5 10.5c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm-9 0c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zM12 14c-1.381 0-2.5 1.119-2.5 2.5S10.619 19 12 19s2.5-1.119 2.5-2.5S13.381 14 12 14z"/>
@@ -30,8 +30,13 @@ export function Header({ theme, onToggleTheme, onToggleMobileMenu }: HeaderProps
               <span className="text-[10px] md:text-xs font-bold text-white uppercase tracking-tighter leading-tight truncate">Meta</span>
               <span className="text-[8px] md:text-[10px] font-medium text-muted-foreground tracking-tight leading-tight truncate">Dashboard Meta | <span className="italic font-bold text-foreground">Personalizze</span></span>
             </div>
-          </div>
+          </a>
         </div>
+        
+        <nav className="hidden lg:flex items-center gap-4">
+          <a href="/" className="text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Dashboard</a>
+          <a href="/calculator" className="text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors border-l border-slate-700 pl-4">Calculadora Google Ads</a>
+        </nav>
       </div>
 
       <div className="flex items-center gap-1 sm:gap-4">
