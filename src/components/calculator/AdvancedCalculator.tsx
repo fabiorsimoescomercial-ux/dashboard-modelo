@@ -50,22 +50,98 @@ export function AdvancedCalculator() {
         <TabsContent value="target" className="space-y-6">
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h3 className="text-lg font-bold">Informações da Campanha</h3>
-              <div className="space-y-2">
-                <Label>Nome da Campanha</Label>
-                <Input placeholder="Ex: Campanha Display Q4" />
+              <h3 className="text-lg font-bold border-b border-[#4cd47f] pb-2">Informações da Campanha</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Tipo de Campanha</Label>
+                  <Select defaultValue="performance">
+                    <SelectTrigger className="bg-[#1a2421]">
+                      <SelectValue placeholder="Selecione o tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="performance">Performance</SelectItem>
+                      <SelectItem value="branding">Branding</SelectItem>
+                      <SelectItem value="remarketing">Remarketing</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Prioridade</Label>
+                  <Select defaultValue="medium">
+                    <SelectTrigger className="bg-[#1a2421]">
+                      <SelectValue placeholder="Prioridade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="high">Alta</SelectItem>
+                      <SelectItem value="medium">Média</SelectItem>
+                      <SelectItem value="low">Baixa</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
+              
               <div className="space-y-2">
-                <Label>Meta de CPA (R$)</Label>
-                <Input type="number" value={targetCpa} onChange={(e) => setTargetCpa(parseFloat(e.target.value))} />
+                <Label className="text-[#4cd47f] font-bold">🎯 Meta de CPA Desejada (R$)</Label>
+                <Input type="number" value={targetCpa} onChange={(e) => setTargetCpa(parseFloat(e.target.value))} className="text-xl font-bold bg-[#1a2421] border-[#4cd47f]/50" />
+              </div>
+
+              <div className="space-y-2">
+                <Label>CPM Ideal (Cluster) (R$)</Label>
+                <Input type="number" defaultValue={8.00} className="bg-[#1a2421]" />
               </div>
             </div>
-            <div className="bg-[#15768f]/10 p-6 rounded-lg border border-[#15768f]/30 flex flex-col justify-center items-center text-center space-y-4">
-              <Target className="h-12 w-12 text-[#4cd47f]" />
-              <h3 className="text-xl font-bold">CPA é o ponto central</h3>
-              <p className="text-sm text-muted-foreground">Todas as recomendações serão baseadas em atingir este CPA desejado.</p>
-              <Button className="bg-[#15768f] hover:bg-[#15768f]/90" onClick={() => setActiveTab("current")}>Próximo passo</Button>
+            
+            <div className="bg-[#15768f]/5 p-6 rounded-lg border border-[#15768f]/20 flex flex-col justify-center space-y-4 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Target className="h-24 w-24 text-[#4cd47f]" />
+              </div>
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <Zap className="h-5 w-5 text-[#4cd47f]" />
+                Lógica de Otimização
+              </h3>
+              <ul className="text-sm text-muted-foreground space-y-2 z-10">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#4cd47f] shrink-0 mt-0.5" />
+                  <span>CPA = CPM / ((CTR/100) * (CVR/100)) / 1000</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#4cd47f] shrink-0 mt-0.5" />
+                  <span>Recomendações focam em atingir o CPA meta.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-[#4cd47f] shrink-0 mt-0.5" />
+                  <span>Benchmarks mínimos são calculados automaticamente.</span>
+                </li>
+              </ul>
+              <Button className="bg-[#15768f] hover:bg-[#15768f]/90 mt-4" onClick={() => setActiveTab("current")}>
+                Próximo passo: Definir Métricas
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="connection" className="space-y-6">
+          <div className="text-center py-12 space-y-6">
+            <div className="mx-auto w-20 h-20 rounded-full bg-slate-800 flex items-center justify-center border-4 border-slate-700">
+              <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold">Simular Conexão Google Ads</h3>
+              <p className="text-muted-foreground max-w-md mx-auto">
+                Conecte-se à API para importar dados reais de suas campanhas de Display e analisar a performance automaticamente.
+              </p>
+            </div>
+            <Button className="bg-[#15768f]" onClick={() => {
+              setIsLoading(true);
+              setTimeout(() => {
+                setIsLoading(false);
+                alert("Simulação de conexão concluída com sucesso!");
+              }, 2000);
+            }}>
+              {isLoading ? <Loader2 className="animate-spin mr-2" /> : null}
+              Simular Conexão
+            </Button>
           </div>
         </TabsContent>
 
