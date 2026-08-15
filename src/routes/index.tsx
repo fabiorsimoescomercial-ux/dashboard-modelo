@@ -161,8 +161,9 @@ function DashboardLayout() {
             ))}
           </div>
 
-          <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-6 overflow-hidden">
+          <div className="flex flex-col gap-6">
+            <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+              <div className="lg:col-span-2 space-y-6 overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 <TrafficFunnel />
                 
@@ -204,7 +205,9 @@ function DashboardLayout() {
                   </div>
                 </div>
               </div>
+            </div>
 
+            <div className="space-y-6">
               <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
                 <div className="p-4 sm:p-6 border-b border-border">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest text-center sm:text-left">Performance por Criativo</h3>
@@ -248,8 +251,8 @@ function DashboardLayout() {
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden lg:col-span-3 transition-all duration-500 ease-in-out">
+            <div className="w-full">
+              <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
                 <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between">
                   <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                 </div>
