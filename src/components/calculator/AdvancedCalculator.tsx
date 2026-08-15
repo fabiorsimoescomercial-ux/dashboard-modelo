@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { Loader2, Zap, Target, TrendingUp, AlertTriangle, CheckCircle2, History } from "lucide-react";
+import { Loader2, Zap, Target, TrendingUp, AlertTriangle, CheckCircle2, History, ChevronRight } from "lucide-react";
 
 export function AdvancedCalculator() {
   const [activeTab, setActiveTab] = useState("target");
