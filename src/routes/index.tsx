@@ -212,47 +212,44 @@ function DashboardLayout() {
                   <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between">
                     <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                   </div>
-                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent">
-                    <table className="w-full text-left min-w-[500px] sm:min-w-full border-collapse">
+                  <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent flex-1">
+                    <table className="w-full text-left min-w-[500px] sm:min-w-full border-collapse h-full">
                       <thead>
                         <tr className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest border-b border-border">
                           <th className="px-4 sm:px-6 py-4 font-bold">Campanha</th>
-                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Investimento</th>
-                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Impressões</th>
-                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Custo p/ lead</th>
+                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Invest.</th>
+                          <th className="px-4 sm:px-6 py-4 font-bold text-right">Impress.</th>
                           <th className="px-4 sm:px-6 py-4 font-bold text-right">Lead</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border">
                         {[
-                          { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", cost: "R$ 9,18", leads: 27, fill: 40 },
-                          { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", cost: "R$ 10,29", leads: 18, fill: 30 },
-                          { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", cost: "R$ 8,03", leads: 15, fill: 20 },
+                          { name: "[Evolution][Conversoes][BR][Fixo]", invest: "R$ 247,78", impressions: "8.480", leads: 27, fill: 40 },
+                          { name: "[Aspirant][Mensagem][SP]", invest: "R$ 185,20", impressions: "6.120", leads: 18, fill: 30 },
+                          { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", impressions: "4.560", leads: 15, fill: 20 },
                         ].map((row, i) => (
                           <tr key={i} className="text-xs text-muted-foreground hover:bg-accent transition-colors relative">
-                            <td className="px-6 py-4 font-medium text-foreground">{row.name}</td>
-                            <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
+                            <td className="px-4 sm:px-6 py-4 font-medium text-foreground">{row.name}</td>
+                            <td className="px-4 sm:px-6 py-4 text-right font-mono relative overflow-hidden">
                               <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
                               <span className="relative z-10">{row.invest}</span>
                             </td>
-                            <td className="px-6 py-4 text-right font-mono relative overflow-hidden">
+                            <td className="px-4 sm:px-6 py-4 text-right font-mono relative overflow-hidden">
                               <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill-5}%` }} />
                               <span className="relative z-10">{row.impressions}</span>
                             </td>
-                            <td className="px-6 py-4 text-right font-mono text-green-400">{row.cost}</td>
-                            <td className="px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
+                            <td className="px-4 sm:px-6 py-4 text-right font-mono text-blue-400">{row.leads}</td>
                           </tr>
                         ))}
                         <tr className="text-xs font-bold text-foreground bg-muted/30 border-t border-border">
-                          <td className="px-6 py-4">Total geral</td>
-                          <td className="px-6 py-4 text-right font-mono">R$ 621,5</td>
-                          <td className="px-6 py-4 text-right font-mono">24.363</td>
-                          <td className="px-6 py-4 text-right font-mono text-green-400">R$ 6,91</td>
-                          <td className="px-6 py-4 text-right font-mono text-blue-400">90</td>
+                          <td className="px-4 sm:px-6 py-4">Total</td>
+                          <td className="px-4 sm:px-6 py-4 text-right font-mono">R$ 621,5</td>
+                          <td className="px-4 sm:px-6 py-4 text-right font-mono">24.363</td>
+                          <td className="px-4 sm:px-6 py-4 text-right font-mono text-blue-400">90</td>
                         </tr>
                       </tbody>
                     </table>
-                    <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                    <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-auto">
                       <span>1 - 15 / 15</span>
                       <div className="flex gap-2">
                         <button className="hover:text-white"><ChevronRight className="h-3 w-3 rotate-180" /></button>
@@ -262,7 +259,6 @@ function DashboardLayout() {
                   </div>
                 </div>
               </div>
-            </div>
 
             <div className="w-full">
               <div className="rounded-xl border border-border bg-card shadow-lg shadow-black/5 overflow-hidden transition-all duration-500 ease-in-out">
