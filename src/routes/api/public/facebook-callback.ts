@@ -18,6 +18,7 @@ export const Route = createFileRoute('/api/public/facebook-callback')({
         const AD_ACCOUNT_ID = 'act_713747984641816';
 
         try {
+          console.log('FacebookCallback: Initiating token exchange...');
           // 1. Exchange code for token
           const tokenRes = await axios.get(`https://graph.facebook.com/v18.0/oauth/access_token`, {
             params: {
@@ -29,8 +30,10 @@ export const Route = createFileRoute('/api/public/facebook-callback')({
           });
 
           const access_token = tokenRes.data.access_token;
+          console.log('FacebookCallback: Token received successfully');
 
           // 2. Pega dados direto da conta travada
+          console.log(`FacebookCallback: Fetching insights for ${AD_ACCOUNT_ID}...`);
           const insightsRes = await axios.get(`https://graph.facebook.com/v18.0/${AD_ACCOUNT_ID}/insights`, {
             params: { 
               access_token, 
@@ -38,17 +41,24 @@ export const Route = createFileRoute('/api/public/facebook-callback')({
               date_preset: 'last_30d' 
             }
           });
+          console.log('FacebookCallback: Insights data received', insightsRes.data);
 
           // Redirect back to dashboard with the insights data
+          const redirectUrl = `/?data=${encodeURIComponent(JSON.stringify(insightsRes.data))}`;
           return new Response(null, {
             status: 302,
             headers: {
-              Location: `/?data=${encodeURIComponent(JSON.stringify(insightsRes.data))}`,
+              Location: redirectUrl,
             },
           });
         } catch (error: any) {
-          console.error('Facebook OAuth Error:', error.response?.data || error.message);
-          return new Response(`Facebook authentication failed: ${error.message}`, { status: 500 });
+          console.error('FacebookCallback: ERROR', error.response?.data || error.message);
+          // Don't just show a blank 500, redirect back with error if possible or show detailed text
+          const errorMsg = error.response?.data?.error?.message || error.message;
+          return new Response(`Facebook authentication failed: ${errorMsg}`, { 
+            status: 500,
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+          });
         }
       }
     }
