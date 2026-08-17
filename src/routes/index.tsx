@@ -49,20 +49,37 @@ function DashboardLayout() {
   const [fbData, setFbData] = useState<any>(null);
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
+    console.log('DashboardLayout: Initializing theme and data check');
+    
+    try {
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
+      console.log('DashboardLayout: Theme set to', isDark ? 'dark' : 'light');
+    } catch (err) {
+      console.error('DashboardLayout: Error initializing theme', err);
+    }
 
     // Check for Facebook data in URL
     const params = new URLSearchParams(window.location.search);
     const dataParam = params.get('data');
     if (dataParam) {
+      console.log('DashboardLayout: FB data found in URL, parsing...');
       try {
-        const parsedData = JSON.parse(decodeURIComponent(dataParam));
-        setFbData(parsedData.data?.[0] || null);
+        const decoded = decodeURIComponent(dataParam);
+        const parsedData = JSON.parse(decoded);
+        console.log('DashboardLayout: FB data parsed successfully', parsedData);
+        
+        if (parsedData?.data && Array.isArray(parsedData.data) && parsedData.data.length > 0) {
+          setFbData(parsedData.data[0]);
+          console.log('DashboardLayout: fbData state updated');
+        } else {
+          console.warn('DashboardLayout: FB data format unexpected or empty', parsedData);
+        }
+        
         // Clean URL
         window.history.replaceState({}, document.title, window.location.pathname);
       } catch (e) {
-        console.error("Error parsing FB data:", e);
+        console.error("DashboardLayout: Error parsing FB data:", e);
       }
     }
   }, []);
@@ -156,9 +173,9 @@ function DashboardLayout() {
           </div>
 
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat) => (
-              <StatCard key={stat.label} {...stat} />
-            ))}
+            {stats?.map((stat) => (
+              <StatCard key={stat?.label || Math.random()} {...stat} />
+            )) || <p className="text-muted-foreground">Carregando métricas...</p>}
           </div>
 
           <div className="flex flex-col gap-6">
@@ -226,16 +243,16 @@ function DashboardLayout() {
                           { name: "[Evolution][BR]", invest: "R$ 247,78", leads: 27, fill: 40 },
                           { name: "[Aspirant][SP]", invest: "R$ 185,20", leads: 18, fill: 30 },
                           { name: "[Test][Traffic][RJ]", invest: "R$ 120,45", leads: 15, fill: 20 },
-                        ].map((row, i) => (
+                        ]?.map((row, i) => (
                           <tr key={i} className="text-xs text-muted-foreground hover:bg-accent transition-colors relative">
-                            <td className="px-4 py-4 font-medium text-foreground truncate max-w-[80px]">{row.name}</td>
+                            <td className="px-4 py-4 font-medium text-foreground truncate max-w-[80px]">{row?.name}</td>
                             <td className="px-2 py-4 text-right font-mono relative overflow-hidden">
-                              <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row.fill}%` }} />
-                              <span className="relative z-10 text-[10px]">{row.invest}</span>
+                              <div className="absolute inset-y-0 right-0 bg-blue-600/10" style={{ width: `${row?.fill || 0}%` }} />
+                              <span className="relative z-10 text-[10px]">{row?.invest}</span>
                             </td>
-                            <td className="px-2 py-4 text-right font-mono text-blue-400">{row.leads}</td>
+                            <td className="px-2 py-4 text-right font-mono text-blue-400">{row?.leads}</td>
                           </tr>
-                        ))}
+                        )) || <tr><td colSpan={3} className="text-center py-4">Sem dados de campanha</td></tr>}
                       </tbody>
                     </table>
                     <div className="px-4 py-4 border-t border-border bg-muted/30 mt-auto">
@@ -268,18 +285,18 @@ function DashboardLayout() {
                         { id: 1, name: "[V 06] [CTA POLO][Copy Atualizada]", impressions: "8.988", leads: 40 },
                         { id: 2, name: "[V 02] [Copy V01][Direto]", impressions: "5.421", leads: 28 },
                         { id: 3, name: "[I 01] [Estático][Fixo]", impressions: "3.210", leads: 15 },
-                      ].map((creative) => (
-                        <tr key={creative.id} className="text-xs text-muted-foreground hover:bg-accent transition-colors">
+                      ]?.map((creative) => (
+                        <tr key={creative?.id || Math.random()} className="text-xs text-muted-foreground hover:bg-accent transition-colors">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 rounded bg-slate-800 border border-slate-700 shrink-0" />
-                              <span className="font-medium text-foreground truncate max-w-[120px] sm:max-w-[200px]">{creative.name}</span>
+                              <span className="font-medium text-foreground truncate max-w-[120px] sm:max-w-[200px]">{creative?.name}</span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-right font-mono">{creative.impressions}</td>
-                          <td className="px-6 py-4 text-right font-mono text-blue-400">{creative.leads}</td>
+                          <td className="px-6 py-4 text-right font-mono">{creative?.impressions}</td>
+                          <td className="px-6 py-4 text-right font-mono text-blue-400">{creative?.leads}</td>
                         </tr>
-                      ))}
+                      )) || <tr><td colSpan={3} className="text-center py-4">Sem dados de criativos</td></tr>}
                     </tbody>
                   </table>
                   <div className="px-6 py-3 border-t border-border flex justify-end items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
