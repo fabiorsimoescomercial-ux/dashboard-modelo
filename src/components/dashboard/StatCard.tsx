@@ -14,26 +14,14 @@ export function StatCard({ label, value, change, sparklineColor = "#3b82f6" }: S
   const isPositive = !change.startsWith('-');
   const isNegative = change.startsWith('-');
   
-  // Custom logic for color coding based on specific fields if needed
-  // In the plan: Investment negative is red (less spent), but the user says "red for negative/piora"
-  // Let's follow the user's specific card request for colors.
-  
-  let statusColorClass = "text-green-500 bg-green-500/10";
-  let Icon = TrendingDown;
-
-  if (label === "Investimento") {
-    statusColorClass = "text-red-500 bg-red-500/10";
-    Icon = TrendingDown;
-  } else if (label === "CPM") {
-    statusColorClass = "text-green-500 bg-green-500/10";
-    Icon = TrendingDown;
-  } else if (label === "CPC") {
-    statusColorClass = "text-red-500 bg-red-500/10";
-    Icon = TrendingUp;
-  } else if (label === "Custo por Lead WhatsApp") {
-    statusColorClass = "text-green-500 bg-green-500/10";
-    Icon = TrendingDown;
-  }
+  // Para métricas de custo (CPA, CPC, Custo), redução (-) é positiva
+  const isCostMetric = label.toLowerCase().includes("cpa") || 
+                       label.toLowerCase().includes("custo") || 
+                       label.toLowerCase().includes("cpc");
+                       
+  const isGood = isCostMetric ? isNegative : isPositive;
+  const statusColorClass = isGood ? "text-emerald-500 bg-emerald-500/10" : "text-rose-500 bg-rose-500/10";
+  const Icon = isPositive ? TrendingUp : TrendingDown;
 
   return (
     <div className="rounded-xl border border-border bg-card p-4 sm:p-5 shadow-lg shadow-black/5 transition-all duration-500 ease-in-out hover:border-primary/50 group">
@@ -56,7 +44,7 @@ export function StatCard({ label, value, change, sparklineColor = "#3b82f6" }: S
             <path
               d={isNegative ? "M0 10 Q 25 35, 50 15 T 100 30" : "M0 30 Q 25 25, 50 35 T 100 10"}
               fill="none"
-              stroke={statusColorClass.includes("text-red-500") ? "#ef4444" : "#22c55e"}
+              stroke={isGood ? "#10b981" : "#f43f5e"}
               strokeWidth="2"
               strokeLinecap="round"
             />

@@ -17,6 +17,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Header } from "@/components/dashboard/Header";
@@ -43,7 +44,10 @@ export const Route = createFileRoute("/")({
   component: DashboardLayout,
 });
 
+type Platform = 'all' | 'meta' | 'google' | 'tiktok';
+
 function DashboardLayout() {
+  const [selectedPlatform, setSelectedPlatform] = useState<Platform>('all');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [fbData, setFbData] = useState<any>(null);
@@ -94,50 +98,93 @@ function DashboardLayout() {
     }
   };
 
+  // Métricas mockadas de e-commerce de alto volume por plataforma
+  const ecommerceMetrics: Record<
+    Platform,
+    {
+      spend: { value: string; change: string };
+      revenue: { value: string; change: string };
+      roas: { value: string; change: string };
+      cpa: { value: string; change: string };
+    }
+  > = {
+    all: {
+      spend: { value: "R$ 384.920,00", change: "+14.2%" },
+      revenue: { value: "R$ 2.463.488,00", change: "+28.6%" },
+      roas: { value: "6.40x", change: "+12.5%" },
+      cpa: { value: "R$ 32,80", change: "-8.4%" },
+    },
+    meta: {
+      spend: {
+        value: fbData
+          ? `R$ ${parseFloat(fbData.spend).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+          : "R$ 185.450,00",
+        change: "+11.8%",
+      },
+      revenue: { value: "R$ 1.149.790,00", change: "+22.4%" },
+      roas: { value: "6.20x", change: "+9.5%" },
+      cpa: { value: "R$ 34,20", change: "-6.2%" },
+    },
+    google: {
+      spend: { value: "R$ 142.300,00", change: "+16.5%" },
+      revenue: { value: "R$ 1.053.020,00", change: "+35.1%" },
+      roas: { value: "7.40x", change: "+16.0%" },
+      cpa: { value: "R$ 28,90", change: "-12.7%" },
+    },
+    tiktok: {
+      spend: { value: "R$ 57.170,00", change: "+21.0%" },
+      revenue: { value: "R$ 260.678,00", change: "+31.8%" },
+      roas: { value: "4.56x", change: "+8.9%" },
+      cpa: { value: "R$ 39,50", change: "-4.3%" },
+    },
+  };
+
+  const currentMetrics = ecommerceMetrics[selectedPlatform];
+
   const stats = [
     { 
-      label: "Investimento", 
-      value: fbData ? `R$ ${parseFloat(fbData.spend).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : "R$ 621,50", 
-      change: "-79.3%" 
+      label: "Investimento Total (Spend)", 
+      value: currentMetrics.spend.value, 
+      change: currentMetrics.spend.change 
     },
     { 
-      label: "Impressões", 
-      value: fbData ? parseInt(fbData.impressions).toLocaleString('pt-BR') : "24.363", 
-      change: "-16.2%" 
+      label: "Faturamento (Revenue)", 
+      value: currentMetrics.revenue.value, 
+      change: currentMetrics.revenue.change 
     },
     { 
-      label: "CTR", 
-      value: fbData ? `${parseFloat(fbData.ctr).toFixed(2)}%` : "1.24%", 
-      change: "22.0%" 
+      label: "ROAS (Retorno sobre Investimento)", 
+      value: currentMetrics.roas.value, 
+      change: currentMetrics.roas.change 
     },
     { 
-      label: "Cliques", 
-      value: fbData ? fbData.clicks : "302", 
-      change: "-23.6%" 
+      label: "Custo por Compra (CPA)", 
+      value: currentMetrics.cpa.value, 
+      change: currentMetrics.cpa.change 
     },
   ];
 
   const chartData = [
-    { date: "04/08", investment: 120, leads: 40 },
-    { date: "05/08", investment: 180, leads: 480 },
-    { date: "06/08", investment: 150, leads: 120 },
-    { date: "07/08", investment: 220, leads: 90 },
-    { date: "08/08", investment: 200, leads: 70 },
-    { date: "09/08", investment: 170, leads: 110 },
-    { date: "10/08", investment: 240, leads: 85 },
-    { date: "11/08", investment: 210, leads: 95 },
-    { date: "12/08", investment: 260, leads: 105 },
-    { date: "13/08", investment: 230, leads: 90 },
+    { date: "04/08", investment: 12500, faturamento: 78400 },
+    { date: "05/08", investment: 14200, faturamento: 92300 },
+    { date: "06/08", investment: 13100, faturamento: 81500 },
+    { date: "07/08", investment: 15800, faturamento: 102600 },
+    { date: "08/08", investment: 14900, faturamento: 95400 },
+    { date: "09/08", investment: 13800, faturamento: 88200 },
+    { date: "10/08", investment: 16400, faturamento: 108900 },
+    { date: "11/08", investment: 15200, faturamento: 97500 },
+    { date: "12/08", investment: 17800, faturamento: 118400 },
+    { date: "13/08", investment: 16100, faturamento: 105200 },
   ];
 
   const chartConfig = {
+    faturamento: {
+      label: "Faturamento (R$)",
+      color: "#10b981",
+    },
     investment: {
       label: "Investimento (R$)",
       color: "#3b82f6",
-    },
-    leads: {
-      label: "Lead WhatsApp",
-      color: "#38BDF8",
     },
   } satisfies ChartConfig;
 
@@ -151,9 +198,9 @@ function DashboardLayout() {
         />
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden bg-background p-3 sm:p-4 md:p-8 space-y-6 sm:space-y-8 transition-colors duration-500 ease-in-out">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <nav className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-3">
+              <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <span className="text-muted-foreground">Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
                 <span className="text-foreground">Visão Geral</span>
@@ -161,8 +208,31 @@ function DashboardLayout() {
               <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl transition-colors duration-500">
                 Visão Geral
               </h1>
+
+              {/* Tabs para alternar entre plataformas */}
+              <Tabs
+                value={selectedPlatform}
+                onValueChange={(val) => setSelectedPlatform(val as Platform)}
+                className="w-full sm:w-auto pt-1"
+              >
+                <TabsList className="grid grid-cols-2 sm:inline-flex h-auto sm:h-9 w-full sm:w-auto p-1 bg-muted/60 border border-border/50">
+                  <TabsTrigger value="all" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                    Visão Global
+                  </TabsTrigger>
+                  <TabsTrigger value="meta" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                    Meta Ads
+                  </TabsTrigger>
+                  <TabsTrigger value="google" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                    Google Ads
+                  </TabsTrigger>
+                  <TabsTrigger value="tiktok" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                    TikTok Ads
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
-            <div className="flex items-center gap-3">
+            
+            <div className="flex items-center gap-3 self-start md:self-end">
               <Button asChild className="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white text-xs font-bold px-6 py-2 rounded-lg h-auto shadow-lg shadow-blue-500/20">
                 <a href="/api/public/facebook-login">
                   <Facebook className="h-4 w-4 fill-current mr-2" />
@@ -187,12 +257,12 @@ function DashboardLayout() {
                   <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-lg shadow-black/5 flex flex-col min-h-[350px] md:min-h-full transition-all duration-500 ease-in-out overflow-hidden">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
                       <div className="flex flex-col">
-                        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Leads vs Investimento</h3>
+                        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Faturamento vs Investimento</h3>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-blue-400" />
-                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Leads</span>
+                          <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter">Faturamento</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="w-2 h-2 rounded-full bg-blue-600" />
@@ -212,10 +282,23 @@ function DashboardLayout() {
                             tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 'bold' }}
                             dy={10}
                           />
-                          <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
-                          <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
+                          <YAxis 
+                            yAxisId="left" 
+                            axisLine={false} 
+                            tickLine={false} 
+                            tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} 
+                            tickFormatter={(v) => `R$ ${(v / 1000).toFixed(0)}k`}
+                          />
+                          <YAxis 
+                            yAxisId="right" 
+                            orientation="right" 
+                            axisLine={false} 
+                            tickLine={false} 
+                            tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} 
+                            tickFormatter={(v) => `R$ ${(v / 1000).toFixed(0)}k`}
+                          />
                           <ChartTooltip content={<ChartTooltipContent />} />
-                          <Line yAxisId="left" type="monotone" dataKey="leads" stroke="var(--color-leads)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
+                          <Line yAxisId="left" type="monotone" dataKey="faturamento" stroke="var(--color-faturamento)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
                           <Line yAxisId="right" type="monotone" dataKey="investment" stroke="var(--color-investment)" strokeWidth={3} dot={false} activeDot={{ r: 4 }} />
                         </LineChart>
                       </ChartContainer>
