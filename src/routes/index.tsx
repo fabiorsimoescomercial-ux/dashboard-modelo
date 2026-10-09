@@ -22,7 +22,6 @@ import {
   RefreshCw
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
 import { supabase } from "@/lib/supabase";
 
@@ -52,7 +51,7 @@ export interface AdPerformanceRecord {
   created_at?: string;
 }
 import { CookieConsent } from "@/components/CookieConsent";
-import { Header } from "@/components/dashboard/Header";
+import { Header, type PlatformFilter } from "@/components/dashboard/Header";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TrafficFunnel } from "@/components/dashboard/TrafficFunnel";
 import { 
@@ -76,7 +75,7 @@ export const Route = createFileRoute("/")({
   component: DashboardLayout,
 });
 
-type Platform = 'all' | 'Google Ads' | 'Meta Ads' | 'TikTok Ads';
+type Platform = PlatformFilter;
 
 function normalizePlatform(val?: string): 'meta' | 'google' | 'tiktok' {
   const p = (val || '').toLowerCase();
@@ -113,6 +112,13 @@ function PlatformBadge({ platform }: { platform?: string }) {
 
 function DashboardLayout() {
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>('all');
+  const [selectedCampaign, setSelectedCampaign] = useState<string>('all');
+
+  const handleSelectPlatform = (platform: Platform) => {
+    setSelectedPlatform(platform);
+    setSelectedCampaign('all');
+  };
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
@@ -170,19 +176,28 @@ function DashboardLayout() {
     }).format(val);
   };
 
-  // 2. Filtro por Plataforma ('all', 'Google Ads', 'Meta Ads', 'TikTok Ads')
+  // 2. Filtro por Plataforma ('all', 'Google Ads', 'Meta Ads', 'TikTok Ads') e Campanha
   const filteredAdsData = useMemo(() => {
     if (!rawAdsData || rawAdsData.length === 0) return [];
-    if (selectedPlatform === 'all') return rawAdsData;
 
     return rawAdsData.filter((row) => {
-      const platformStr = String(row.platform || row.plataforma || "").toLowerCase();
-      if (selectedPlatform === 'Google Ads') return platformStr.includes("google");
-      if (selectedPlatform === 'Meta Ads') return platformStr.includes("meta") || platformStr.includes("facebook");
-      if (selectedPlatform === 'TikTok Ads') return platformStr.includes("tiktok");
-      return false;
+      // Filtro por Plataforma
+      if (selectedPlatform !== 'all') {
+        const platformStr = String(row.platform || row.plataforma || "").toLowerCase();
+        if (selectedPlatform === 'Google Ads' && !platformStr.includes("google")) return false;
+        if (selectedPlatform === 'Meta Ads' && !(platformStr.includes("meta") || platformStr.includes("facebook"))) return false;
+        if (selectedPlatform === 'TikTok Ads' && !platformStr.includes("tiktok")) return false;
+      }
+
+      // Filtro por Campanha
+      if (selectedCampaign !== 'all') {
+        const name = row.campaign_name || row.campaign || row.name || row.nome_campanha;
+        if (name !== selectedCampaign) return false;
+      }
+
+      return true;
     });
-  }, [rawAdsData, selectedPlatform]);
+  }, [rawAdsData, selectedPlatform, selectedCampaign]);
 
   const hasRealData = rawAdsData.length > 0;
 
@@ -265,7 +280,11 @@ function DashboardLayout() {
         : currentMetrics.revenue.change 
     },
     { 
-      label: selectedPlatform === 'all' ? "ROAS Blended" : `ROAS (${selectedPlatform})`, 
+      label: selectedCampaign !== 'all' 
+        ? `ROAS (${selectedCampaign})` 
+        : selectedPlatform === 'all' 
+          ? "ROAS Blended" 
+          : `ROAS (${selectedPlatform})`, 
       value: isLoadingAds 
         ? "Carregando..." 
         : hasRealData 
@@ -412,6 +431,43 @@ function DashboardLayout() {
     },
   ];
 
+  // Lista dinâmica de campanhas disponíveis para o cabeçalho
+  const availableCampaigns = useMemo(() => {
+    const list: string[] = [];
+    const seen = new Set<string>();
+
+    if (hasRealData) {
+      for (const row of rawAdsData) {
+        if (selectedPlatform !== 'all') {
+          const platformStr = String(row.platform || row.plataforma || "").toLowerCase();
+          if (selectedPlatform === 'Google Ads' && !platformStr.includes("google")) continue;
+          if (selectedPlatform === 'Meta Ads' && !(platformStr.includes("meta") || platformStr.includes("facebook"))) continue;
+          if (selectedPlatform === 'TikTok Ads' && !platformStr.includes("tiktok")) continue;
+        }
+
+        const name = row.campaign_name || row.campaign || row.name || row.nome_campanha;
+        if (name && !seen.has(name)) {
+          seen.add(name);
+          list.push(name);
+        }
+      }
+    } else {
+      const normFilter = normalizePlatform(selectedPlatform === 'all' ? 'all' : selectedPlatform);
+      const filtered = selectedPlatform === 'all'
+        ? allCampaigns
+        : allCampaigns.filter((c) => c.platform === normFilter);
+
+      for (const c of filtered) {
+        if (!seen.has(c.name)) {
+          seen.add(c.name);
+          list.push(c.name);
+        }
+      }
+    }
+
+    return list.sort();
+  }, [hasRealData, rawAdsData, selectedPlatform]);
+
   // 5. Linhas da Tabela de Campanhas com cálculo individual de ROAS
   const campaignRows = useMemo(() => {
     if (hasRealData) {
@@ -458,9 +514,13 @@ function DashboardLayout() {
     }
 
     const normFilter = normalizePlatform(selectedPlatform === 'all' ? 'all' : selectedPlatform);
-    const mockFiltered = selectedPlatform === 'all' 
+    let mockFiltered = selectedPlatform === 'all' 
       ? allCampaigns 
       : allCampaigns.filter((c) => c.platform === normFilter);
+
+    if (selectedCampaign !== 'all') {
+      mockFiltered = mockFiltered.filter((c) => c.name === selectedCampaign);
+    }
 
     return mockFiltered.map((c, idx) => ({
       id: `mock-${idx}`,
@@ -470,7 +530,7 @@ function DashboardLayout() {
       revenue: c.revenue,
       roas: `${(c.revenue / c.invest).toFixed(1)}x`,
     }));
-  }, [hasRealData, filteredAdsData, selectedPlatform]);
+  }, [hasRealData, filteredAdsData, selectedPlatform, selectedCampaign]);
 
   const totalCampaignSpend = campaignRows.reduce((acc, c) => acc + c.spend, 0);
   const totalCampaignRevenue = campaignRows.reduce((acc, c) => acc + c.revenue, 0);
@@ -552,42 +612,54 @@ function DashboardLayout() {
         <Header 
           theme={theme} 
           onToggleTheme={toggleTheme} 
-          onToggleMobileMenu={() => setIsMobileMenuOpen(true)} 
+          onToggleMobileMenu={() => setIsMobileMenuOpen(true)}
+          selectedPlatform={selectedPlatform}
+          onSelectPlatform={handleSelectPlatform}
+          campaigns={availableCampaigns}
+          selectedCampaign={selectedCampaign}
+          onSelectCampaign={setSelectedCampaign}
         />
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden bg-background p-3 sm:p-4 md:p-8 space-y-6 sm:space-y-8 transition-colors duration-500 ease-in-out">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div className="space-y-3">
+            <div className="space-y-1">
               <nav className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 <span className="text-muted-foreground">Dashboard</span>
                 <ChevronRight className="h-3 w-3" />
                 <span className="text-foreground">Visão Geral</span>
+                {(selectedPlatform !== 'all' || selectedCampaign !== 'all') && (
+                  <>
+                    <ChevronRight className="h-3 w-3" />
+                    <span className="text-primary font-semibold">
+                      {selectedPlatform !== 'all' ? selectedPlatform : 'Todas as Plataformas'}
+                      {selectedCampaign !== 'all' && ` • ${selectedCampaign}`}
+                    </span>
+                  </>
+                )}
               </nav>
-              <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl transition-colors duration-500">
-                Visão Geral
-              </h1>
-
-              {/* Tabs para alternar entre plataformas */}
-              <Tabs
-                value={selectedPlatform}
-                onValueChange={(val) => setSelectedPlatform(val as Platform)}
-                className="w-full sm:w-auto pt-1"
-              >
-                <TabsList className="grid grid-cols-2 sm:inline-flex h-auto sm:h-9 w-full sm:w-auto p-1 bg-muted/60 border border-border/50">
-                  <TabsTrigger value="all" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
-                    Visão Geral (Blended)
-                  </TabsTrigger>
-                  <TabsTrigger value="Google Ads" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
-                    Google Ads
-                  </TabsTrigger>
-                  <TabsTrigger value="Meta Ads" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
-                    Meta Ads
-                  </TabsTrigger>
-                  <TabsTrigger value="TikTok Ads" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
-                    TikTok Ads
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl transition-colors duration-500">
+                  Visão Geral
+                </h1>
+                {(selectedPlatform !== 'all' || selectedCampaign !== 'all') && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedPlatform('all');
+                      setSelectedCampaign('all');
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
+                    title="Limpar filtros ativos"
+                  >
+                    <span>
+                      Filtro ativo: {selectedPlatform !== 'all' ? selectedPlatform : ''}
+                      {selectedPlatform !== 'all' && selectedCampaign !== 'all' ? ' • ' : ''}
+                      {selectedCampaign !== 'all' ? selectedCampaign : ''}
+                    </span>
+                    <X className="h-3 w-3" />
+                  </button>
+                )}
+              </div>
             </div>
             
             <div className="flex items-center gap-3 self-start md:self-end">
