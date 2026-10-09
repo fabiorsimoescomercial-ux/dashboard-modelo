@@ -4,10 +4,12 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
+import { validateSession } from "@/lib/auth";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -115,13 +117,55 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function AuthGuard({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    const isPublic = pathname === "/login" || pathname.startsWith("/api/public");
+    const valid = validateSession();
+
+    if (!valid && !isPublic) {
+      setIsAuthorized(false);
+      window.location.replace("/login");
+    } else if (valid && pathname === "/login") {
+      setIsAuthorized(true);
+      window.location.replace("/");
+    } else {
+      setIsAuthorized(true);
+    }
+  }, [location.pathname]);
+
+  const pathname = typeof window !== "undefined" ? window.location.pathname : location.pathname;
+  const isPublic = pathname === "/login" || pathname.startsWith("/api/public");
+
+  // Durante a checagem no browser, se a rota for privada e não houver autorização válida, exibe feedback seguro
+  if (isAuthorized === false && !isPublic) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#0a0e14] text-white">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-6 w-6 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
+            Validando sessão criptográfica...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return <>{children}</>;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AuthGuard>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </AuthGuard>
     </QueryClientProvider>
   );
 }

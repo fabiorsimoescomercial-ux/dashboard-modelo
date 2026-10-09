@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { 
   LayoutDashboard, 
   TrendingUp, 
@@ -8,7 +8,6 @@ import {
   Users,
   DollarSign,
   ChevronRight,
-  Facebook,
   X,
   Smartphone,
   Eye,
@@ -18,11 +17,40 @@ import {
   Play,
   Image as ImageIcon,
   Search,
-  ShoppingBag
+  ShoppingBag,
+  Database,
+  RefreshCw
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createFileRoute } from "@tanstack/react-router";
+import { supabase } from "@/lib/supabase";
+
+export interface AdPerformanceRecord {
+  id?: string | number;
+  campaign_name?: string;
+  campaign?: string;
+  nome_campanha?: string;
+  name?: string;
+  platform?: string;
+  plataforma?: string;
+  spend?: number | string;
+  investment?: number | string;
+  investimento?: number | string;
+  cost?: number | string;
+  revenue?: number | string;
+  receita?: number | string;
+  purchases?: number | string;
+  compras?: number | string;
+  conversions?: number | string;
+  roas?: number | string;
+  cpa?: number | string;
+  ctr?: number | string;
+  clicks?: number | string;
+  impressions?: number | string;
+  date?: string;
+  created_at?: string;
+}
 import { CookieConsent } from "@/components/CookieConsent";
 import { Header } from "@/components/dashboard/Header";
 import { StatCard } from "@/components/dashboard/StatCard";
@@ -48,10 +76,18 @@ export const Route = createFileRoute("/")({
   component: DashboardLayout,
 });
 
-type Platform = 'all' | 'meta' | 'google' | 'tiktok';
+type Platform = 'all' | 'Google Ads' | 'Meta Ads' | 'TikTok Ads';
 
-function PlatformBadge({ platform }: { platform: 'meta' | 'google' | 'tiktok' }) {
-  if (platform === 'meta') {
+function normalizePlatform(val?: string): 'meta' | 'google' | 'tiktok' {
+  const p = (val || '').toLowerCase();
+  if (p.includes('google')) return 'google';
+  if (p.includes('tiktok')) return 'tiktok';
+  return 'meta';
+}
+
+function PlatformBadge({ platform }: { platform?: string }) {
+  const normalized = normalizePlatform(platform);
+  if (normalized === 'meta') {
     return (
       <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 whitespace-nowrap">
         <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
@@ -59,7 +95,7 @@ function PlatformBadge({ platform }: { platform: 'meta' | 'google' | 'tiktok' })
       </span>
     );
   }
-  if (platform === 'google') {
+  if (normalized === 'google') {
     return (
       <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 whitespace-nowrap">
         <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
@@ -79,41 +115,38 @@ function DashboardLayout() {
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>('all');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
-  const [fbData, setFbData] = useState<any>(null);
+
+  // 1. Busca de Dados via TanStack Query e Supabase (ordenada por date DESC)
+  const {
+    data: rawAdsData = [],
+    isLoading: isLoadingAds,
+    isError: isAdsError,
+    error: adsError,
+    refetch: refetchAds,
+  } = useQuery({
+    queryKey: ["ads_performance"],
+    queryFn: async () => {
+      console.log("[Supabase] Executando SELECT * FROM ads_performance ORDER BY date DESC...");
+      const { data, error } = await supabase
+        .from("ads_performance")
+        .select("*")
+        .order("date", { ascending: false });
+
+      if (error) {
+        console.error("[Supabase] Erro ao buscar ads_performance:", error);
+        throw error;
+      }
+      return (data || []) as AdPerformanceRecord[];
+    },
+    staleTime: 1000 * 60 * 2,
+  });
 
   useEffect(() => {
-    console.log('DashboardLayout: Initializing theme and data check');
-    
     try {
       const isDark = document.documentElement.classList.contains("dark");
       setTheme(isDark ? "dark" : "light");
-      console.log('DashboardLayout: Theme set to', isDark ? 'dark' : 'light');
     } catch (err) {
       console.error('DashboardLayout: Error initializing theme', err);
-    }
-
-    // Check for Facebook data in URL
-    const params = new URLSearchParams(window.location.search);
-    const dataParam = params.get('data');
-    if (dataParam) {
-      console.log('DashboardLayout: FB data found in URL, parsing...');
-      try {
-        const decoded = decodeURIComponent(dataParam);
-        const parsedData = JSON.parse(decoded);
-        console.log('DashboardLayout: FB data parsed successfully', parsedData);
-        
-        if (parsedData?.data && Array.isArray(parsedData.data) && parsedData.data.length > 0) {
-          setFbData(parsedData.data[0]);
-          console.log('DashboardLayout: fbData state updated');
-        } else {
-          console.warn('DashboardLayout: FB data format unexpected or empty', parsedData);
-        }
-        
-        // Clean URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-      } catch (e) {
-        console.error("DashboardLayout: Error parsing FB data:", e);
-      }
     }
   }, []);
 
@@ -127,16 +160,52 @@ function DashboardLayout() {
     }
   };
 
-  // Métricas mockadas de e-commerce de alto volume por plataforma
-  const ecommerceMetrics: Record<
-    Platform,
-    {
-      spend: { value: string; change: string };
-      revenue: { value: string; change: string };
-      roas: { value: string; change: string };
-      cpa: { value: string; change: string };
+  // Formatador padronizado de moeda BRL (R$)
+  const formatCurrency = (val: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(val);
+  };
+
+  // 2. Filtro por Plataforma ('all', 'Google Ads', 'Meta Ads', 'TikTok Ads')
+  const filteredAdsData = useMemo(() => {
+    if (!rawAdsData || rawAdsData.length === 0) return [];
+    if (selectedPlatform === 'all') return rawAdsData;
+
+    return rawAdsData.filter((row) => {
+      const platformStr = String(row.platform || row.plataforma || "").toLowerCase();
+      if (selectedPlatform === 'Google Ads') return platformStr.includes("google");
+      if (selectedPlatform === 'Meta Ads') return platformStr.includes("meta") || platformStr.includes("facebook");
+      if (selectedPlatform === 'TikTok Ads') return platformStr.includes("tiktok");
+      return false;
+    });
+  }, [rawAdsData, selectedPlatform]);
+
+  const hasRealData = rawAdsData.length > 0;
+
+  // 3. Cálculo de KPIs de E-commerce: Spend, Revenue, ROAS, Purchases e CPA
+  const kpis = useMemo(() => {
+    let spend = 0;
+    let revenue = 0;
+    let purchases = 0;
+
+    for (const row of filteredAdsData) {
+      spend += Number(row.spend ?? row.investment ?? row.investimento ?? row.cost ?? 0);
+      revenue += Number(row.revenue ?? row.receita ?? 0);
+      purchases += Number(row.purchases ?? row.compras ?? row.conversions ?? 0);
     }
-  > = {
+
+    const roas = spend > 0 ? revenue / spend : 0;
+    const cpa = purchases > 0 ? spend / purchases : 0;
+
+    return { spend, revenue, roas, purchases, cpa };
+  }, [filteredAdsData]);
+
+  // Métricas mockadas de fallback para e-commerce quando o banco ainda não possui registros
+  const ecommerceMetrics = {
     all: {
       spend: { value: "R$ 384.920,00", change: "+14.2%" },
       revenue: { value: "R$ 2.463.488,00", change: "+28.6%" },
@@ -145,9 +214,7 @@ function DashboardLayout() {
     },
     meta: {
       spend: {
-        value: fbData
-          ? `R$ ${parseFloat(fbData.spend).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
-          : "R$ 185.450,00",
+        value: "R$ 185.450,00",
         change: "+11.8%",
       },
       revenue: { value: "R$ 1.149.790,00", change: "+22.4%" },
@@ -168,32 +235,60 @@ function DashboardLayout() {
     },
   };
 
-  const currentMetrics = ecommerceMetrics[selectedPlatform];
+  const normalizedKey = normalizePlatform(selectedPlatform === 'all' ? 'all' : selectedPlatform);
+  const currentMetrics = selectedPlatform === 'all' 
+    ? ecommerceMetrics.all 
+    : (ecommerceMetrics[normalizedKey] || ecommerceMetrics.all);
 
+  // 4 Cartões de Estatísticas com dados dinâmicos do Supabase
   const stats = [
     { 
       label: "Investimento Total (Spend)", 
-      value: currentMetrics.spend.value, 
-      change: currentMetrics.spend.change 
+      value: isLoadingAds 
+        ? "Carregando..." 
+        : hasRealData 
+          ? formatCurrency(kpis.spend) 
+          : currentMetrics.spend.value, 
+      change: hasRealData 
+        ? (selectedPlatform === 'all' ? "Blended" : selectedPlatform) 
+        : currentMetrics.spend.change 
     },
     { 
       label: "Faturamento (Revenue)", 
-      value: currentMetrics.revenue.value, 
-      change: currentMetrics.revenue.change 
+      value: isLoadingAds 
+        ? "Carregando..." 
+        : hasRealData 
+          ? formatCurrency(kpis.revenue) 
+          : currentMetrics.revenue.value, 
+      change: hasRealData 
+        ? (kpis.revenue >= kpis.spend ? "+Retorno Positivo" : "-Monitorar") 
+        : currentMetrics.revenue.change 
     },
     { 
-      label: "ROAS (Retorno sobre Investimento)", 
-      value: currentMetrics.roas.value, 
-      change: currentMetrics.roas.change 
+      label: selectedPlatform === 'all' ? "ROAS Blended" : `ROAS (${selectedPlatform})`, 
+      value: isLoadingAds 
+        ? "Carregando..." 
+        : hasRealData 
+          ? `${kpis.roas.toFixed(2)}x` 
+          : currentMetrics.roas.value, 
+      change: hasRealData 
+        ? `${kpis.purchases} conversões` 
+        : currentMetrics.roas.change 
     },
     { 
-      label: "Custo por Compra (CPA)", 
-      value: currentMetrics.cpa.value, 
-      change: currentMetrics.cpa.change 
+      label: "CPA (Custo por Aquisição)", 
+      value: isLoadingAds 
+        ? "Carregando..." 
+        : hasRealData 
+          ? formatCurrency(kpis.cpa) 
+          : currentMetrics.cpa.value, 
+      change: hasRealData 
+        ? (kpis.purchases > 0 ? `${kpis.purchases} compras` : "Sem conversões") 
+        : currentMetrics.cpa.value 
     },
   ];
 
-  const chartData = [
+  const defaultMockChartData = [
     { date: "04/08", investment: 12500, faturamento: 78400 },
     { date: "05/08", investment: 14200, faturamento: 92300 },
     { date: "06/08", investment: 13100, faturamento: 81500 },
@@ -206,6 +301,66 @@ function DashboardLayout() {
     { date: "13/08", investment: 16100, faturamento: 105200 },
   ];
 
+  // 4. Gráfico de Tendência (Recharts): Agrupado por data para comparar Investimento vs Faturamento
+  const chartData = useMemo(() => {
+    if (!hasRealData) {
+      return defaultMockChartData;
+    }
+
+    const dateMap = new Map<string, { date: string; investment: number; faturamento: number; sortKey: number }>();
+
+    for (const row of filteredAdsData) {
+      if (!row.date) continue;
+      const rawDate = String(row.date);
+      let displayDate = rawDate;
+      let timestamp = 0;
+
+      try {
+        const parsed = new Date(rawDate);
+        if (!isNaN(parsed.getTime())) {
+          timestamp = parsed.getTime();
+          const day = String(parsed.getDate()).padStart(2, "0");
+          const month = String(parsed.getMonth() + 1).padStart(2, "0");
+          displayDate = `${day}/${month}`;
+        } else if (rawDate.includes("-")) {
+          const parts = rawDate.split("T")[0].split("-");
+          if (parts.length === 3) {
+            displayDate = `${parts[2]}/${parts[1]}`;
+            timestamp = new Date(parts.join("-")).getTime();
+          }
+        }
+      } catch {
+        displayDate = rawDate;
+      }
+
+      const spend = Number(row.spend ?? row.investment ?? row.investimento ?? row.cost ?? 0);
+      const revenue = Number(row.revenue ?? row.receita ?? 0);
+
+      if (!dateMap.has(displayDate)) {
+        dateMap.set(displayDate, {
+          date: displayDate,
+          investment: 0,
+          faturamento: 0,
+          sortKey: timestamp || 0,
+        });
+      }
+
+      const entry = dateMap.get(displayDate)!;
+      entry.investment += spend;
+      entry.faturamento += revenue;
+      if (timestamp && (!entry.sortKey || timestamp < entry.sortKey)) {
+        entry.sortKey = timestamp;
+      }
+    }
+
+    const aggregated = Array.from(dateMap.values());
+    if (aggregated.length === 0) return defaultMockChartData;
+
+    // Ordenação cronológica crescente (antigo -> recente)
+    aggregated.sort((a, b) => a.sortKey - b.sortKey);
+    return aggregated;
+  }, [hasRealData, filteredAdsData]);
+
   const chartConfig = {
     faturamento: {
       label: "Faturamento (R$)",
@@ -217,7 +372,7 @@ function DashboardLayout() {
     },
   } satisfies ChartConfig;
 
-  // Dados mockados de campanhas multi-plataforma (Google, Meta, TikTok)
+  // Dados mockados de campanhas multi-plataforma para fallback
   const allCampaigns = [
     { 
       name: "[Search][Fundo de Funil]", 
@@ -257,14 +412,70 @@ function DashboardLayout() {
     },
   ];
 
-  const filteredCampaigns = selectedPlatform === 'all' 
-    ? allCampaigns 
-    : allCampaigns.filter((c) => c.platform === selectedPlatform);
+  // 5. Linhas da Tabela de Campanhas com cálculo individual de ROAS
+  const campaignRows = useMemo(() => {
+    if (hasRealData) {
+      const map = new Map<string, {
+        id: string | number;
+        name: string;
+        platform: string;
+        spend: number;
+        revenue: number;
+      }>();
 
-  const totalCampaignInvest = filteredCampaigns.reduce((acc, c) => acc + c.invest, 0);
-  const totalCampaignRevenue = filteredCampaigns.reduce((acc, c) => acc + c.revenue, 0);
-  const averageCampaignRoas = totalCampaignInvest > 0 
-    ? (totalCampaignRevenue / totalCampaignInvest).toFixed(1) + "x" 
+      for (const row of filteredAdsData) {
+        const name = row.campaign_name || row.campaign || row.name || row.nome_campanha || "Campanha Geral";
+        const platform = row.platform || row.plataforma || "meta";
+        const spend = Number(row.spend ?? row.investment ?? row.investimento ?? row.cost ?? 0);
+        const revenue = Number(row.revenue ?? row.receita ?? 0);
+
+        if (!map.has(name)) {
+          map.set(name, {
+            id: row.id ?? name,
+            name,
+            platform,
+            spend: 0,
+            revenue: 0,
+          });
+        }
+
+        const curr = map.get(name)!;
+        curr.spend += spend;
+        curr.revenue += revenue;
+      }
+
+      return Array.from(map.values()).map((c) => {
+        const roas = c.spend > 0 ? (c.revenue / c.spend).toFixed(1) + "x" : "0.0x";
+        return {
+          id: c.id,
+          name: c.name,
+          platform: c.platform,
+          spend: c.spend,
+          revenue: c.revenue,
+          roas,
+        };
+      });
+    }
+
+    const normFilter = normalizePlatform(selectedPlatform === 'all' ? 'all' : selectedPlatform);
+    const mockFiltered = selectedPlatform === 'all' 
+      ? allCampaigns 
+      : allCampaigns.filter((c) => c.platform === normFilter);
+
+    return mockFiltered.map((c, idx) => ({
+      id: `mock-${idx}`,
+      name: c.name,
+      platform: c.platform,
+      spend: c.invest,
+      revenue: c.revenue,
+      roas: `${(c.revenue / c.invest).toFixed(1)}x`,
+    }));
+  }, [hasRealData, filteredAdsData, selectedPlatform]);
+
+  const totalCampaignSpend = campaignRows.reduce((acc, c) => acc + c.spend, 0);
+  const totalCampaignRevenue = campaignRows.reduce((acc, c) => acc + c.revenue, 0);
+  const averageCampaignRoas = totalCampaignSpend > 0 
+    ? (totalCampaignRevenue / totalCampaignSpend).toFixed(1) + "x" 
     : "0.0x";
 
   // Dados mockados de criativos multi-plataforma
@@ -333,7 +544,7 @@ function DashboardLayout() {
 
   const filteredCreatives = selectedPlatform === 'all'
     ? allCreatives
-    : allCreatives.filter((c) => c.platform === selectedPlatform);
+    : allCreatives.filter((c) => c.platform === normalizePlatform(selectedPlatform));
 
   return (
     <div className="flex h-screen w-full bg-background transition-colors duration-500 ease-in-out overflow-x-hidden">
@@ -364,15 +575,15 @@ function DashboardLayout() {
               >
                 <TabsList className="grid grid-cols-2 sm:inline-flex h-auto sm:h-9 w-full sm:w-auto p-1 bg-muted/60 border border-border/50">
                   <TabsTrigger value="all" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
-                    Visão Global
+                    Visão Geral (Blended)
                   </TabsTrigger>
-                  <TabsTrigger value="meta" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
-                    Meta Ads
-                  </TabsTrigger>
-                  <TabsTrigger value="google" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                  <TabsTrigger value="Google Ads" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
                     Google Ads
                   </TabsTrigger>
-                  <TabsTrigger value="tiktok" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                  <TabsTrigger value="Meta Ads" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
+                    Meta Ads
+                  </TabsTrigger>
+                  <TabsTrigger value="TikTok Ads" className="text-xs font-semibold px-3 py-1.5 sm:py-1">
                     TikTok Ads
                   </TabsTrigger>
                 </TabsList>
@@ -380,12 +591,45 @@ function DashboardLayout() {
             </div>
             
             <div className="flex items-center gap-3 self-start md:self-end">
-              <Button asChild className="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white text-xs font-bold px-6 py-2 rounded-lg h-auto shadow-lg shadow-blue-500/20">
-                <a href="/api/public/facebook-login">
-                  <Facebook className="h-4 w-4 fill-current mr-2" />
-                  Conectar Facebook
-                </a>
-              </Button>
+              {isLoadingAds ? (
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-border/60 bg-muted/40 text-xs text-muted-foreground font-medium animate-pulse shadow-sm">
+                  <RefreshCw className="h-3.5 w-3.5 text-blue-400 animate-spin" />
+                  <span>Carregando dados...</span>
+                </div>
+              ) : hasRealData ? (
+                <button
+                  type="button"
+                  onClick={() => refetchAds()}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs font-semibold shadow-sm transition-all duration-200 cursor-pointer"
+                  title="Atualizar dados do Supabase"
+                >
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Supabase: {rawAdsData.length} registros</span>
+                  <RefreshCw className="h-3.5 w-3.5 ml-1 opacity-75 hover:opacity-100 transition-opacity" />
+                </button>
+              ) : isAdsError ? (
+                <button
+                  type="button"
+                  onClick={() => refetchAds()}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-semibold shadow-sm transition-all duration-200 cursor-pointer"
+                  title={String(adsError)}
+                >
+                  <Database className="h-3.5 w-3.5 text-amber-400" />
+                  <span>Tentar Reconectar Supabase</span>
+                  <RefreshCw className="h-3.5 w-3.5 ml-1 opacity-75 hover:opacity-100 transition-opacity" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => refetchAds()}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-border/60 bg-muted/30 hover:bg-muted/50 text-xs text-muted-foreground hover:text-foreground font-medium transition-all duration-200 cursor-pointer"
+                  title="Atualizar dados do Supabase"
+                >
+                  <Database className="h-3.5 w-3.5 text-slate-400" />
+                  <span>Atualizar Supabase</span>
+                  <RefreshCw className="h-3.5 w-3.5 ml-1 opacity-75 hover:opacity-100 transition-opacity" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -459,7 +703,7 @@ function DashboardLayout() {
                   <div className="p-4 sm:p-6 border-b border-border flex items-center justify-between">
                     <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Tabela de Campanhas</h3>
                     <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                      {filteredCampaigns.length} ativas
+                      {campaignRows.length} ativas
                     </span>
                   </div>
                   <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent scrollbar-track-transparent flex-1 flex flex-col">
@@ -474,29 +718,35 @@ function DashboardLayout() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border">
-                        {filteredCampaigns.length > 0 ? (
-                          filteredCampaigns.map((row, i) => {
-                            const roasValue = (row.revenue / row.invest).toFixed(1);
-                            return (
-                              <tr key={i} className="text-xs text-muted-foreground hover:bg-accent/50 transition-colors relative">
-                                <td className="px-4 py-3.5 font-medium text-foreground truncate max-w-[130px]" title={row.name}>
-                                  {row.name}
-                                </td>
-                                <td className="px-3 py-3.5">
-                                  <PlatformBadge platform={row.platform} />
-                                </td>
-                                <td className="px-3 py-3.5 text-right font-mono text-[11px] text-foreground">
-                                  R$ {row.invest.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                </td>
-                                <td className="px-3 py-3.5 text-right font-mono text-[11px] text-foreground">
-                                  R$ {row.revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                </td>
-                                <td className="px-4 py-3.5 text-right font-mono text-[11px] font-bold text-emerald-400">
-                                  {roasValue}x
-                                </td>
-                              </tr>
-                            );
-                          })
+                        {isLoadingAds ? (
+                          <tr>
+                            <td colSpan={5} className="text-center py-8 text-muted-foreground text-xs">
+                              <div className="flex flex-col items-center justify-center gap-2">
+                                <RefreshCw className="h-5 w-5 animate-spin text-primary" />
+                                <span>Buscando campanhas no Supabase...</span>
+                              </div>
+                            </td>
+                          </tr>
+                        ) : campaignRows.length > 0 ? (
+                          campaignRows.map((row) => (
+                            <tr key={row.id} className="text-xs text-muted-foreground hover:bg-accent/50 transition-colors relative">
+                              <td className="px-4 py-3.5 font-medium text-foreground truncate max-w-[130px]" title={row.name}>
+                                {row.name}
+                              </td>
+                              <td className="px-3 py-3.5">
+                                <PlatformBadge platform={row.platform} />
+                              </td>
+                              <td className="px-3 py-3.5 text-right font-mono text-[11px] text-foreground">
+                                {formatCurrency(row.spend)}
+                              </td>
+                              <td className="px-3 py-3.5 text-right font-mono text-[11px] text-foreground">
+                                {formatCurrency(row.revenue)}
+                              </td>
+                              <td className="px-4 py-3.5 text-right font-mono text-[11px] font-bold text-emerald-400">
+                                {row.roas}
+                              </td>
+                            </tr>
+                          ))
                         ) : (
                           <tr>
                             <td colSpan={5} className="text-center py-6 text-muted-foreground text-xs">
@@ -507,10 +757,10 @@ function DashboardLayout() {
                       </tbody>
                     </table>
                     <div className="px-4 py-3.5 border-t border-border bg-muted/30 mt-auto flex items-center justify-between text-[10px] font-bold text-foreground">
-                      <span>Total ({filteredCampaigns.length})</span>
+                      <span>Total ({campaignRows.length})</span>
                       <div className="flex items-center gap-3 font-mono">
                         <span className="text-muted-foreground">
-                          R$ {totalCampaignInvest.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                          {formatCurrency(totalCampaignSpend)}
                         </span>
                         <span className="text-emerald-400">
                           ROAS: {averageCampaignRoas}

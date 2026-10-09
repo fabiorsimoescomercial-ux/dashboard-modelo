@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ApiPublicFacebookCallbackRouteImport } from './routes/api/public/facebook-callback'
 import { Route as ApiPublicFacebookLoginRouteImport } from './routes/api/public/facebook-login'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const CalculatorRoute = CalculatorRouteImport.update({
   id: '/calculator',
   path: '/calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicFacebookCallbackRoute =
@@ -39,12 +45,14 @@ const ApiPublicFacebookLoginRoute = ApiPublicFacebookLoginRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
+  '/login': typeof LoginRoute
   '/api/public/facebook-callback': typeof ApiPublicFacebookCallbackRoute
   '/api/public/facebook-login': typeof ApiPublicFacebookLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
+  '/login': typeof LoginRoute
   '/api/public/facebook-callback': typeof ApiPublicFacebookCallbackRoute
   '/api/public/facebook-login': typeof ApiPublicFacebookLoginRoute
 }
@@ -52,6 +60,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
+  '/login': typeof LoginRoute
   '/api/public/facebook-callback': typeof ApiPublicFacebookCallbackRoute
   '/api/public/facebook-login': typeof ApiPublicFacebookLoginRoute
 }
@@ -60,18 +69,21 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/calculator'
+    | '/login'
     | '/api/public/facebook-callback'
     | '/api/public/facebook-login'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/calculator'
+    | '/login'
     | '/api/public/facebook-callback'
     | '/api/public/facebook-login'
   id:
     | '__root__'
     | '/'
     | '/calculator'
+    | '/login'
     | '/api/public/facebook-callback'
     | '/api/public/facebook-login'
   fileRoutesById: FileRoutesById
@@ -79,6 +91,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
+  LoginRoute: typeof LoginRoute
   ApiPublicFacebookCallbackRoute: typeof ApiPublicFacebookCallbackRoute
   ApiPublicFacebookLoginRoute: typeof ApiPublicFacebookLoginRoute
 }
@@ -97,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/calculator'
       fullPath: '/calculator'
       preLoaderRoute: typeof CalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/facebook-callback': {
@@ -119,6 +139,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
+  LoginRoute: LoginRoute,
   ApiPublicFacebookCallbackRoute: ApiPublicFacebookCallbackRoute,
   ApiPublicFacebookLoginRoute: ApiPublicFacebookLoginRoute,
 }
